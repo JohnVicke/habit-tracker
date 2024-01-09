@@ -1,35 +1,24 @@
-import type { DefaultSession } from "next-auth";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import NextAuth from "next-auth";
-import Discord from "next-auth/providers/discord";
+import { libsql } from "@lucia-auth/adapter-sqlite";
+import { lucia } from "lucia";
+import { node } from "lucia/middleware";
 
-import { db, tableCreator } from "@acme/db";
+import { client, schema } from "@ht/db";
 
-export type { Session } from "next-auth";
-
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-    } & DefaultSession["user"];
-  }
-}
-
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
-  adapter: DrizzleAdapter(db, tableCreator),
-  providers: [Discord],
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+export const auth = lucia({
+  adapter: libsql(client, {
+    user: schema.user._.name,
+    session: schema.session._.name,
+    key: schema.key._.name,
+  }),
+  env: process.env.NODE_ENV === "production" ? "PROD" : "DEV",
+  middleware: node(),
+  sessionCookie: {
+    expires: false,
   },
+  getUserAttributes: (data) => ({
+    id: data.id,
+    username: data.username,
+  }),
 });
+
+export type Auth = typeof auth;

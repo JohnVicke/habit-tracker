@@ -1,10 +1,13 @@
 {
-  "name": "@acme/auth",
+  "name": "@ht/auth",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/types/lucia.d.ts"
+    },
     "./env": "./env.js"
   },
   "license": "MIT",
@@ -15,9 +18,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/db": "workspace:^0.1.0",
     "@auth/drizzle-adapter": "^0.3.12",
+    "@ht/db": "workspace:^0.1.0",
+    "@lucia-auth/adapter-sqlite": "^2.0.1",
     "@t3-oss/env-nextjs": "^0.7.1",
+    "lucia": "^2.7.6",
     "next": "^14.0.4",
     "next-auth": "5.0.0-beta.4",
     "react": "18.2.0",
@@ -25,9 +30,9 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@ht/eslint-config": "workspace:^0.2.0",
+    "@ht/prettier-config": "workspace:^0.1.0",
+    "@ht/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
@@ -35,8 +40,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@ht/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@ht/prettier-config"
 }

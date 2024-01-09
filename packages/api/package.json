@@ -1,40 +1,41 @@
 {
-  "name": "@acme/api",
-  "version": "0.1.0",
+  "name": "@ht/api",
   "private": true,
+  "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema.graphql": "./src/schema.graphql"
   },
   "license": "MIT",
   "scripts": {
+    "dev": "pnpm codegen --watch",
+    "codegen": "graphql-codegen-esm --config ./src/codegen.ts",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@acme/auth": "workspace:^0.1.0",
-    "@acme/db": "workspace:^0.1.0",
-    "@acme/validators": "workspace:^0.1.0",
-    "@trpc/client": "next",
-    "@trpc/server": "next",
-    "superjson": "2.2.1",
-    "zod": "^3.22.4"
-  },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@ht/eslint-config": "workspace:^0.2.0",
+    "@ht/prettier-config": "workspace:^0.1.0",
+    "@ht/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
-    "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@ht/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@ht/prettier-config",
+  "dependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-resolvers": "^4.0.1",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@parcel/watcher": "^2.3.0"
+  }
 }

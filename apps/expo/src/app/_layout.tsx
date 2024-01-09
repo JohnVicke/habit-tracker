@@ -1,19 +1,15 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
-import { TRPCProvider } from "~/utils/api";
-
 import "../styles.css";
 
-// This is the main layout of the app
-// It wraps your pages with the providers they need
+import { ApolloProvider } from "@apollo/client";
+
+import { apolloClient } from "~/utils/apollo-client";
+
 export default function RootLayout() {
   return (
-    <TRPCProvider>
-      {/*
-          The Stack component displays the current page.
-          It also allows you to configure your screens 
-        */}
+    <ApolloProvider client={apolloClient}>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -22,6 +18,6 @@ export default function RootLayout() {
         }}
       />
       <StatusBar />
-    </TRPCProvider>
+    </ApolloProvider>
   );
 }

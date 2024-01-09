@@ -1,0 +1,69 @@
+type Streak {
+  id: ID!
+  startDate: String!
+  endDate: String!
+  habitId: ID!
+  habit: Habit!
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  habits: [Habit]!
+}
+
+input CreateStreakInput {
+  startDate: String!
+  endDate: String!
+  habitId: ID!
+}
+
+input UpdateHabitInput {
+  name: String
+  description: String
+  frequency: String
+}
+
+type Habit {
+  id: ID!
+  name: String!
+  description: String
+  frequency: String!
+  userId: ID!
+  user: User!
+  streaks: [Streak!]!
+}
+
+type Dashboard {
+  totalHabits: Int!
+  completedHabits: Int!
+  longestStreak: Int!
+}
+
+input CreateHabitInput {
+  name: String!
+  description: String
+  frequency: String!
+}
+
+type Query {
+  habits: [Habit!]!
+  habit(id: ID!): Habit
+  streaks: [Streak!]!
+  streak(id: ID!): Streak
+  dashboard: Dashboard
+}
+
+type SignUpResponse {
+  token: String!
+}
+
+type Mutation {
+  signUp(username: String!, password: String!): SignUpResponse!
+  createHabit(input: CreateHabitInput!): Habit!
+  createStreak(input: CreateStreakInput!): Streak!
+  updateHabit(id: ID!, input: UpdateHabitInput!): Habit!
+  deleteHabit(id: ID!): Habit!
+  deleteStreak(id: ID!): Streak!
+}

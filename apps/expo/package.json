@@ -1,5 +1,5 @@
 {
-  "name": "@acme/expo",
+  "name": "@ht/expo",
   "version": "0.1.0",
   "private": true,
   "main": "expo-router/entry",
@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.8",
     "@expo/metro-config": "^0.10.7",
     "@shopify/flash-list": "1.4.3",
     "@tanstack/react-query": "^5.8.7",
@@ -25,8 +26,11 @@
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
     "expo-router": "2.0.14",
+    "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.22.0",
     "expo-status-bar": "~1.7.1",
+    "expo-web-browser": "~12.3.2",
+    "graphql": "^16.8.1",
     "nativewind": "^4.0.22",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -38,15 +42,14 @@
     "superjson": "2.2.1"
   },
   "devDependencies": {
-    "@acme/api": "workspace:^0.1.0",
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tailwind-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@babel/runtime": "^7.23.7",
     "@expo/config-plugins": "^7.2.5",
+    "@ht/eslint-config": "workspace:^0.2.0",
+    "@ht/prettier-config": "workspace:^0.1.0",
+    "@ht/tailwind-config": "workspace:^0.1.0",
+    "@ht/tsconfig": "workspace:^0.1.0",
     "@types/babel__core": "^7.20.4",
     "@types/react": "^18.2.46",
     "eslint": "^8.56.0",
@@ -57,12 +60,12 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
+      "@ht/eslint-config/base",
+      "@ht/eslint-config/react"
     ],
     "ignorePatterns": [
       "expo-plugins/**"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@ht/prettier-config"
 }
