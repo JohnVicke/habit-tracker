@@ -1,5 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -134,3 +135,11 @@ export type User = {
   id: Scalars['ID']['output'];
   username: Scalars['String']['output'];
 };
+
+export type DashboardQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DashboardQuery = { __typename?: 'Query', dashboard?: { __typename?: 'Dashboard', totalHabits: number, completedHabits: number, longestStreak: number } | null };
+
+
+export const DashboardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHabits"}},{"kind":"Field","name":{"kind":"Name","value":"completedHabits"}},{"kind":"Field","name":{"kind":"Name","value":"longestStreak"}}]}}]}}]} as unknown as DocumentNode<DashboardQuery, DashboardQueryVariables>;

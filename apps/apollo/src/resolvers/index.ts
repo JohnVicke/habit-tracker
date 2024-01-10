@@ -1,7 +1,8 @@
-import type { MutationResolvers, QueryResolvers } from "./gql/generated";
+import type { MutationResolvers, QueryResolvers } from "../gql/generated";
 import { signUp } from "./mutations/sign-up";
+import { dashboard } from "./queries/dashboard";
 
 export const resolvers = {
-  Query: {},
-  Mutations: { signUp },
-} satisfies { Query: QueryResolvers; Mutations: MutationResolvers };
+  Query: { dashboard },
+  Mutation: { signUp },
+} satisfies { Query: QueryResolvers; Mutation: MutationResolvers };

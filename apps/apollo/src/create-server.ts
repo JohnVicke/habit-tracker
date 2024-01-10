@@ -3,11 +3,16 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 
 import type { Context } from "./context";
 import { createContext } from "./context";
+import { createApolloLogger } from "./logger/apollo-logger";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./type-defs";
 
 export function createServer() {
-  const apollo = new ApolloServer<Context>({ typeDefs, resolvers });
+  const apollo = new ApolloServer<Context>({
+    typeDefs,
+    resolvers,
+    plugins: [createApolloLogger()],
+  });
   return {
     async start(listenOptions: { port: number; path: string }) {
       const { url } = await startStandaloneServer(apollo, {

@@ -18,5 +18,4 @@ export default {
     url: process.env.DB_URL,
     authToken: process.env.DB_AUTH_TOKEN,
   },
-  tablesFilter: ["t3turbo_*"],
 } satisfies Config;

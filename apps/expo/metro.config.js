@@ -11,6 +11,7 @@ const workspaceRoot = path.resolve(projectRoot, "../..");
 const config = getDefaultConfig(projectRoot, { isCSSEnabled: true });
 
 if (config.resolver) {
+  console.log("Using monorepo config for Metro");
   // 1. Watch all files within the monorepo
   config.watchFolders = [workspaceRoot];
   // 2. Let Metro know where to resolve packages and in what order

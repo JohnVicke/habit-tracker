@@ -7,11 +7,11 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const SHARED_CLIENT_GEN_PATH = path.join(__dirname, "./client/");
 const GRAPHQL_SERVER_GEN_PATH = path.join(
   __dirname,
-  "../../../apps/apollo/src/gql/generated.ts",
+  "../../apps/apollo/src/gql/generated.ts",
 );
 const CLIENT_APPS_DOCUMENTS_PATH = path.join(
   __dirname,
-  "../../apps/**/*.ts?(x)",
+  "../../apps/expo/**/*.tsx",
 );
 
 const schema = {

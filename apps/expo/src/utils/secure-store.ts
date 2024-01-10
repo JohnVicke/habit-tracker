@@ -1,12 +1,12 @@
 import * as SecureStore from "expo-secure-store";
 
-type Keys = "session_store";
+type Keys = "session_token";
 
 interface Values {
-  session_store: string;
+  session_token: string;
 }
 
-export const secureStore = () => ({
+export const secureStore = {
   async getItem<T extends Keys>(key: T) {
     const value = await SecureStore.getItemAsync(key);
 
@@ -24,4 +24,7 @@ export const secureStore = () => ({
       typeof value === "object" ? JSON.stringify(value) : value,
     );
   },
-});
+  async deleteItem(key: Keys) {
+    return SecureStore.deleteItemAsync(key);
+  },
+};

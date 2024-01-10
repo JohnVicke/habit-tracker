@@ -5,11 +5,11 @@ import "../styles.css";
 
 import { ApolloProvider } from "@apollo/client";
 
-import { apolloClient } from "~/utils/apollo-client";
+import { createApolloClient } from "~/utils/apollo-client";
 
 export default function RootLayout() {
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={createApolloClient()}>
       <Stack
         screenOptions={{
           headerStyle: {

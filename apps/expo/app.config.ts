@@ -18,21 +18,16 @@ const defineConfig = (): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
-    bundleIdentifier: "your.bundle.identifier",
+    bundleIdentifier: "com.johnvicke.ht",
     supportsTablet: true,
   },
   android: {
-    package: "your.bundle.identifier",
+    package: "com.johnvicke.ht",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
     },
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
