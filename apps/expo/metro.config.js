@@ -23,6 +23,8 @@ if (config.resolver) {
   config.resolver.disableHierarchicalLookup = true;
 }
 
+config.resolver.sourceExts.push("mjs");
+
 // @ts-expect-error - FIXME: type is mismatching?
 module.exports = withNativeWind(config, {
   input: "./src/styles.css",

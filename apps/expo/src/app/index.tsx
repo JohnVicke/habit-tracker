@@ -1,7 +1,8 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import { useQuery } from "@apollo/client";
+import { H1, Text } from "tamagui";
 
 import { graphql } from "@ht/api/client";
 
@@ -24,9 +25,7 @@ export default function Index() {
     <SafeAreaView className="bg-[#1F104A]">
       <Stack.Screen options={{ title: "Home Page" }} />
       <View className="h-full w-full p-4">
-        <Text className="pb-2 text-center text-5xl font-bold text-white">
-          Habit <Text className="text-pink-400">Tracker</Text>
-        </Text>
+        <H1>Habit Tracker</H1>
         {!dashboardResult.loading && dashboardResult.data?.dashboard && (
           <View className="flex space-y-2 py-2">
             <Text className="font-semibold italic">

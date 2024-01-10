@@ -3,13 +3,21 @@ import { StatusBar } from "expo-status-bar";
 
 import "../styles.css";
 
-import { ApolloProvider } from "@apollo/client";
+import { ActivityIndicator } from "react-native";
+import { useFonts } from "expo-font";
 
-import { createApolloClient } from "~/utils/apollo-client";
+import { RootProviders } from "~/root-providers";
+import { tamaguiFonts } from "~/tamagui/tamagui-fonts";
 
 export default function RootLayout() {
+  const [loaded] = useFonts(tamaguiFonts);
+
+  if (!loaded) {
+    return <ActivityIndicator />;
+  }
+
   return (
-    <ApolloProvider client={createApolloClient()}>
+    <RootProviders>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -18,6 +26,6 @@ export default function RootLayout() {
         }}
       />
       <StatusBar />
-    </ApolloProvider>
+    </RootProviders>
   );
 }
