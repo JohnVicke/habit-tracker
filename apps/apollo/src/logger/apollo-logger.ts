@@ -18,7 +18,15 @@ export const createApolloLogger = (
         request.operationName &&
         !opts?.ignoredPaths?.includes(request.operationName)
       ) {
-        logger.info({ operationId, event: "request", name: operationName });
+        const query = request.query?.replace(/\n/g, "");
+        const variables = Object.keys(request.variables ?? {});
+        logger.info({
+          operationId,
+          event: "request",
+          name: operationName,
+          query,
+          variables,
+        });
       }
 
       return {

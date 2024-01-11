@@ -19,8 +19,6 @@ const dashboardQuery = graphql(/* GraphQL */ `
 export default function Index() {
   const dashboardResult = useQuery(dashboardQuery);
 
-  console.log(dashboardResult.data);
-
   return (
     <SafeAreaView className="bg-[#1F104A]">
       <Stack.Screen options={{ title: "Home Page" }} />
