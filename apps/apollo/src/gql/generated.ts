@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -16,18 +16,15 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
 };
 
 export type CreateHabitInput = {
   description?: InputMaybe<Scalars['String']['input']>;
-  frequency: Scalars['String']['input'];
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  frequency: Scalars['Int']['input'];
   name: Scalars['String']['input'];
-};
-
-export type CreateStreakInput = {
-  endDate: Scalars['String']['input'];
-  habitId: Scalars['ID']['input'];
-  startDate: Scalars['String']['input'];
+  type: HabitType;
 };
 
 export type Dashboard = {
@@ -39,21 +36,29 @@ export type Dashboard = {
 
 export type Habit = {
   __typename?: 'Habit';
+  createdAt: Scalars['Date']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  frequency: Scalars['String']['output'];
+  endDate?: Maybe<Scalars['Date']['output']>;
+  frequency: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  streaks: Array<Streak>;
-  user: User;
+  type: HabitType;
   userId: Scalars['ID']['output'];
 };
 
+export const HabitType = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Weekly: 'WEEKLY',
+  Yearly: 'YEARLY'
+} as const;
+
+export type HabitType = typeof HabitType[keyof typeof HabitType];
 export type Mutation = {
   __typename?: 'Mutation';
   createHabit: Habit;
-  createStreak: Streak;
   deleteHabit: Habit;
-  deleteStreak: Streak;
+  signIn: SignUpResponse;
   signUp: SignUpResponse;
   updateHabit: Habit;
 };
@@ -64,18 +69,14 @@ export type MutationCreateHabitArgs = {
 };
 
 
-export type MutationCreateStreakArgs = {
-  input: CreateStreakInput;
-};
-
-
 export type MutationDeleteHabitArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationDeleteStreakArgs = {
-  id: Scalars['ID']['input'];
+export type MutationSignInArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 
@@ -95,8 +96,6 @@ export type Query = {
   dashboard?: Maybe<Dashboard>;
   habit?: Maybe<Habit>;
   habits: Array<Habit>;
-  streak?: Maybe<Streak>;
-  streaks: Array<Streak>;
 };
 
 
@@ -104,23 +103,9 @@ export type QueryHabitArgs = {
   id: Scalars['ID']['input'];
 };
 
-
-export type QueryStreakArgs = {
-  id: Scalars['ID']['input'];
-};
-
 export type SignUpResponse = {
   __typename?: 'SignUpResponse';
   token: Scalars['String']['output'];
-};
-
-export type Streak = {
-  __typename?: 'Streak';
-  endDate: Scalars['String']['output'];
-  habit: Habit;
-  habitId: Scalars['ID']['output'];
-  id: Scalars['ID']['output'];
-  startDate: Scalars['String']['output'];
 };
 
 export type UpdateHabitInput = {
@@ -211,15 +196,15 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateHabitInput: CreateHabitInput;
-  CreateStreakInput: CreateStreakInput;
   Dashboard: ResolverTypeWrapper<Dashboard>;
+  Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Habit: ResolverTypeWrapper<Habit>;
+  HabitType: HabitType;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SignUpResponse: ResolverTypeWrapper<SignUpResponse>;
-  Streak: ResolverTypeWrapper<Streak>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UpdateHabitInput: UpdateHabitInput;
   User: ResolverTypeWrapper<User>;
@@ -229,15 +214,14 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   CreateHabitInput: CreateHabitInput;
-  CreateStreakInput: CreateStreakInput;
   Dashboard: Dashboard;
+  Date: Scalars['Date']['output'];
   Habit: Habit;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
   Query: {};
   SignUpResponse: SignUpResponse;
-  Streak: Streak;
   String: Scalars['String']['output'];
   UpdateHabitInput: UpdateHabitInput;
   User: User;
@@ -250,22 +234,26 @@ export type DashboardResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type HabitResolvers<ContextType = any, ParentType extends ResolversParentTypes['Habit'] = ResolversParentTypes['Habit']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  frequency?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  endDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  frequency?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  streaks?: Resolver<Array<ResolversTypes['Streak']>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['HabitType'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationCreateHabitArgs, 'input'>>;
-  createStreak?: Resolver<ResolversTypes['Streak'], ParentType, ContextType, RequireFields<MutationCreateStreakArgs, 'input'>>;
   deleteHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationDeleteHabitArgs, 'id'>>;
-  deleteStreak?: Resolver<ResolversTypes['Streak'], ParentType, ContextType, RequireFields<MutationDeleteStreakArgs, 'id'>>;
+  signIn?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'password' | 'username'>>;
   signUp?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'password' | 'username'>>;
   updateHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationUpdateHabitArgs, 'id' | 'input'>>;
 }>;
@@ -274,21 +262,10 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   dashboard?: Resolver<Maybe<ResolversTypes['Dashboard']>, ParentType, ContextType>;
   habit?: Resolver<Maybe<ResolversTypes['Habit']>, ParentType, ContextType, RequireFields<QueryHabitArgs, 'id'>>;
   habits?: Resolver<Array<ResolversTypes['Habit']>, ParentType, ContextType>;
-  streak?: Resolver<Maybe<ResolversTypes['Streak']>, ParentType, ContextType, RequireFields<QueryStreakArgs, 'id'>>;
-  streaks?: Resolver<Array<ResolversTypes['Streak']>, ParentType, ContextType>;
 }>;
 
 export type SignUpResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['SignUpResponse'] = ResolversParentTypes['SignUpResponse']> = ResolversObject<{
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type StreakResolvers<ContextType = any, ParentType extends ResolversParentTypes['Streak'] = ResolversParentTypes['Streak']> = ResolversObject<{
-  endDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  habit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType>;
-  habitId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  startDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -302,11 +279,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Dashboard?: DashboardResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   Habit?: HabitResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SignUpResponse?: SignUpResponseResolvers<ContextType>;
-  Streak?: StreakResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;
 

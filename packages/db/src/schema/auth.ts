@@ -1,4 +1,7 @@
+import { relations } from "drizzle-orm";
 import { blob, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+import { habit } from "./habit";
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
@@ -25,3 +28,7 @@ export const key = sqliteTable("user_key", {
     .references(() => user.id),
   hashedPassword: text("hashed_password"),
 });
+
+export const userRelations = relations(user, ({ many }) => ({
+  habits: many(habit),
+}));

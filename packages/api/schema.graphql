@@ -1,10 +1,4 @@
-type Streak {
-  id: ID!
-  startDate: String!
-  endDate: String!
-  habitId: ID!
-  habit: Habit!
-}
+scalar Date
 
 type User {
   id: ID!
@@ -13,26 +7,36 @@ type User {
   habits: [Habit]!
 }
 
-input CreateStreakInput {
-  startDate: String!
-  endDate: String!
-  habitId: ID!
-}
-
 input UpdateHabitInput {
   name: String
   description: String
   frequency: String
 }
 
+enum HabitType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
 type Habit {
   id: ID!
-  name: String!
-  description: String
-  frequency: String!
   userId: ID!
-  user: User!
-  streaks: [Streak!]!
+  name: String!
+  type: HabitType!
+  frequency: Int!
+  createdAt: Date!
+  endDate: Date
+  description: String
+}
+
+input CreateHabitInput {
+  name: String!
+  type: HabitType!
+  frequency: Int!
+  description: String
+  endDate: Date
 }
 
 type Dashboard {
@@ -41,17 +45,9 @@ type Dashboard {
   longestStreak: Int!
 }
 
-input CreateHabitInput {
-  name: String!
-  description: String
-  frequency: String!
-}
-
 type Query {
   habits: [Habit!]!
   habit(id: ID!): Habit
-  streaks: [Streak!]!
-  streak(id: ID!): Streak
   dashboard: Dashboard
 }
 
@@ -61,9 +57,8 @@ type SignUpResponse {
 
 type Mutation {
   signUp(username: String!, password: String!): SignUpResponse!
+  signIn(username: String!, password: String!): SignUpResponse!
   createHabit(input: CreateHabitInput!): Habit!
-  createStreak(input: CreateStreakInput!): Streak!
   updateHabit(id: ID!, input: UpdateHabitInput!): Habit!
   deleteHabit(id: ID!): Habit!
-  deleteStreak(id: ID!): Streak!
 }

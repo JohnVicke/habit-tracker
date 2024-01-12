@@ -13,8 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n": types.DashboardDocument,
+    "\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n": types.SignInDocument,
     "\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n": types.SignUpDocument,
+    "\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n": types.DashboardDocument,
+    "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      description\n      endDate\n      frequency\n      type\n      name\n      id\n      userId\n      createdAt\n    }\n  }\n": types.CreateHabitDocument,
 };
 
 /**
@@ -34,11 +36,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n"): (typeof documents)["\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n"];
+export function graphql(source: "\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n"): (typeof documents)["\n  query Dashboard {\n    dashboard {\n      totalHabits\n      completedHabits\n      longestStreak\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      description\n      endDate\n      frequency\n      type\n      name\n      id\n      userId\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      description\n      endDate\n      frequency\n      type\n      name\n      id\n      userId\n      createdAt\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

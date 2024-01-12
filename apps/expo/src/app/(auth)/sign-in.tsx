@@ -1,5 +1,5 @@
 import { SignIn } from "~/features/auth/sign-in";
 
-export default function SignInPage() {
+export default function SignInScreen() {
   return <SignIn />;
 }

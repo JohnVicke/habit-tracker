@@ -15,18 +15,15 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
 };
 
 export type CreateHabitInput = {
   description?: InputMaybe<Scalars['String']['input']>;
-  frequency: Scalars['String']['input'];
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  frequency: Scalars['Int']['input'];
   name: Scalars['String']['input'];
-};
-
-export type CreateStreakInput = {
-  endDate: Scalars['String']['input'];
-  habitId: Scalars['ID']['input'];
-  startDate: Scalars['String']['input'];
+  type: HabitType;
 };
 
 export type Dashboard = {
@@ -38,21 +35,27 @@ export type Dashboard = {
 
 export type Habit = {
   __typename?: 'Habit';
+  createdAt: Scalars['Date']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  frequency: Scalars['String']['output'];
+  endDate?: Maybe<Scalars['Date']['output']>;
+  frequency: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  streaks: Array<Streak>;
-  user: User;
+  type: HabitType;
   userId: Scalars['ID']['output'];
 };
+
+export type HabitType =
+  | 'DAILY'
+  | 'MONTHLY'
+  | 'WEEKLY'
+  | 'YEARLY';
 
 export type Mutation = {
   __typename?: 'Mutation';
   createHabit: Habit;
-  createStreak: Streak;
   deleteHabit: Habit;
-  deleteStreak: Streak;
+  signIn: SignUpResponse;
   signUp: SignUpResponse;
   updateHabit: Habit;
 };
@@ -63,18 +66,14 @@ export type MutationCreateHabitArgs = {
 };
 
 
-export type MutationCreateStreakArgs = {
-  input: CreateStreakInput;
-};
-
-
 export type MutationDeleteHabitArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationDeleteStreakArgs = {
-  id: Scalars['ID']['input'];
+export type MutationSignInArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 
@@ -94,8 +93,6 @@ export type Query = {
   dashboard?: Maybe<Dashboard>;
   habit?: Maybe<Habit>;
   habits: Array<Habit>;
-  streak?: Maybe<Streak>;
-  streaks: Array<Streak>;
 };
 
 
@@ -103,23 +100,9 @@ export type QueryHabitArgs = {
   id: Scalars['ID']['input'];
 };
 
-
-export type QueryStreakArgs = {
-  id: Scalars['ID']['input'];
-};
-
 export type SignUpResponse = {
   __typename?: 'SignUpResponse';
   token: Scalars['String']['output'];
-};
-
-export type Streak = {
-  __typename?: 'Streak';
-  endDate: Scalars['String']['output'];
-  habit: Habit;
-  habitId: Scalars['ID']['output'];
-  id: Scalars['ID']['output'];
-  startDate: Scalars['String']['output'];
 };
 
 export type UpdateHabitInput = {
@@ -136,10 +119,13 @@ export type User = {
   username: Scalars['String']['output'];
 };
 
-export type DashboardQueryVariables = Exact<{ [key: string]: never; }>;
+export type SignInMutationVariables = Exact<{
+  username: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
 
 
-export type DashboardQuery = { __typename?: 'Query', dashboard?: { __typename?: 'Dashboard', totalHabits: number, completedHabits: number, longestStreak: number } | null };
+export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignUpResponse', token: string } };
 
 export type SignUpMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -149,6 +135,20 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'SignUpResponse', token: string } };
 
+export type DashboardQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const DashboardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHabits"}},{"kind":"Field","name":{"kind":"Name","value":"completedHabits"}},{"kind":"Field","name":{"kind":"Name","value":"longestStreak"}}]}}]}}]} as unknown as DocumentNode<DashboardQuery, DashboardQueryVariables>;
+
+export type DashboardQuery = { __typename?: 'Query', dashboard?: { __typename?: 'Dashboard', totalHabits: number, completedHabits: number, longestStreak: number } | null };
+
+export type CreateHabitMutationVariables = Exact<{
+  input: CreateHabitInput;
+}>;
+
+
+export type CreateHabitMutation = { __typename?: 'Mutation', createHabit: { __typename?: 'Habit', description?: string | null, endDate?: any | null, frequency: number, type: HabitType, name: string, id: string, userId: string, createdAt: any } };
+
+
+export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
+export const DashboardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dashboard"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHabits"}},{"kind":"Field","name":{"kind":"Name","value":"completedHabits"}},{"kind":"Field","name":{"kind":"Name","value":"longestStreak"}}]}}]}}]} as unknown as DocumentNode<DashboardQuery, DashboardQueryVariables>;
+export const CreateHabitDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHabit"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHabitInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHabit"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"frequency"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<CreateHabitMutation, CreateHabitMutationVariables>;

@@ -10,9 +10,9 @@ import { graphql } from "@ht/api/client";
 import { Screen } from "~/components/screen";
 import { secureStore } from "~/utils/secure-store";
 
-const signInMutation = graphql(/* GraphQL */ `
-  mutation SignIn($username: String!, $password: String!) {
-    signIn(username: $username, password: $password) {
+const signUpMutation = graphql(/* GraphQL */ `
+  mutation SignUp($username: String!, $password: String!) {
+    signUp(username: $username, password: $password) {
       token
     }
   }
@@ -25,7 +25,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export const SignIn = () => {
+export const SignUp = () => {
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -34,9 +34,9 @@ export const SignIn = () => {
     },
   });
 
-  const [mutate, { loading }] = useMutation(signInMutation, {
+  const [mutate, { loading }] = useMutation(signUpMutation, {
     async onCompleted(data) {
-      await secureStore.setItem("session_token", data.signIn.token);
+      await secureStore.setItem("session_token", data.signUp.token);
       router.push("/(main)/(tabs)/dashboard");
     },
   });
@@ -44,7 +44,7 @@ export const SignIn = () => {
   return (
     <Screen>
       <YStack space>
-        <H1>Sign in</H1>
+        <H1>Sign Up</H1>
         <Form
           onSubmit={handleSubmit((data) => {
             void mutate({ variables: data });
