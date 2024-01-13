@@ -1,4 +1,4 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { H1 } from "tamagui";
 
 import { useSession } from "~/features/auth/use-session";
@@ -14,5 +14,5 @@ export default function AppLayout() {
     return <Redirect href="/sign-in" />;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return <Tabs screenOptions={{ headerShown: false }} />;
 }

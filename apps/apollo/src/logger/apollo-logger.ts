@@ -20,21 +20,21 @@ export const createApolloLogger = (
       ) {
         const query = request.query?.replace(/\n/g, "");
         const variables = Object.keys(request.variables ?? {});
-        logger.info({
-          operationId,
-          event: "request",
-          name: operationName,
-          query,
-          variables,
-        });
+        // logger.info({
+        //   operationId,
+        //   event: "request",
+        //   name: operationName,
+        //   query,
+        //   variables,
+        // });
       }
 
       return {
         async willSendResponse(requestContext) {
-          logger.info({
-            operationId,
-            response: requestContext.response,
-          });
+          // logger.info({
+          //   operationId,
+          //   response: requestContext.response,
+          // });
         },
       };
     },
