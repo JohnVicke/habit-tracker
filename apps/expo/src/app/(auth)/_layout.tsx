@@ -6,7 +6,7 @@ const modalOptions = {
 
 export default function AuthLayout() {
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="sign-in" options={modalOptions} />
       <Stack.Screen name="sign-up" options={modalOptions} />
     </Stack>

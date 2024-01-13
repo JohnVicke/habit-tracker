@@ -11,7 +11,7 @@ export default function AppLayout() {
   }
 
   if (!session) {
-    return <Redirect href="/landing" />;
+    return <Redirect href="/" />;
   }
 
   return <Tabs screenOptions={{ headerShown: false }} />;

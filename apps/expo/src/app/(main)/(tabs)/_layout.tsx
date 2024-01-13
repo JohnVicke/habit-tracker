@@ -10,15 +10,6 @@ export default function AppLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          elevation: 0,
-          position: "absolute",
-          bottom: bottom || 16,
-          left: 16,
-          right: 16,
-          borderRadius: 16,
-          height: 60,
-        },
       }}
     >
       <Tabs.Screen

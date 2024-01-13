@@ -20,10 +20,6 @@
       "persistent": true,
       "cache": false
     },
-    "codegen": {
-      "persistent": true,
-      "cache": false
-    },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],
       "outputMode": "new-only"
@@ -35,6 +31,11 @@
     "typecheck": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+    },
+    "@ht/apollo#dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
     },
     "clean": {
       "cache": false

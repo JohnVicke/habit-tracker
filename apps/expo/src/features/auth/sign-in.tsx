@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Form, H1, Input, Spinner, YStack } from "tamagui";
+import { Button, Form, H1, H3, Input, Label, Spinner, YStack } from "tamagui";
 import { z } from "zod";
 
 import { graphql } from "@ht/api/client";
@@ -43,8 +43,9 @@ export const SignIn = () => {
 
   return (
     <Screen>
-      <YStack space>
-        <H1>Sign in</H1>
+      <H1>Hi</H1>
+      <H3>Welcome back</H3>
+      <YStack space marginTop="$8">
         <Form
           onSubmit={handleSubmit((data) => {
             void mutate({ variables: data });
@@ -55,19 +56,25 @@ export const SignIn = () => {
               control={control}
               name="username"
               render={({ field }) => (
-                <Input {...field} placeholder="Username" />
+                <>
+                  <Label>Username</Label>
+                  <Input {...field} placeholder="johnvicke" />
+                </>
               )}
             />
             <Controller
               control={control}
               name="password"
               render={({ field }) => (
-                <Input {...field} secureTextEntry placeholder="Password" />
+                <>
+                  <Label>Password</Label>
+                  <Input {...field} secureTextEntry placeholder="Password" />
+                </>
               )}
             />
             <Form.Trigger asChild>
-              <Button theme="purple" icon={loading ? <Spinner /> : undefined}>
-                Sign ink
+              <Button marginTop="$4" icon={loading ? <Spinner /> : undefined}>
+                Sign in
               </Button>
             </Form.Trigger>
           </YStack>

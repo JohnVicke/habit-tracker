@@ -21,6 +21,8 @@ import { graphql } from "@ht/api/client";
 
 import { CustomSelect } from "~/components/custom-select";
 import { Screen } from "~/components/screen";
+import { SelectField } from "~/components/select-field";
+import { TextField } from "~/components/text-field";
 
 const createHabitMutation = graphql(/* GraphQL */ `
   mutation CreateHabit($input: CreateHabitInput!) {
@@ -38,7 +40,7 @@ const createHabitMutation = graphql(/* GraphQL */ `
 `);
 
 const schema = z.object({
-  name: z.string(),
+  name: z.string().min(1),
   frequency: z.number(),
   type: z.enum(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]),
   description: z.string().optional(),
@@ -76,9 +78,9 @@ export function AddHabit() {
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: "workout",
+      name: "",
       frequency: 1,
-      type: "DAILY",
+      type: "WEEKLY",
     },
   });
 
@@ -92,67 +94,30 @@ export function AddHabit() {
           })}
         >
           <YStack space>
-            <Controller
+            <TextField
+              label="What do you want to achieve?"
+              placeholder="Drink 3 liters of water..."
               control={control}
               name="name"
-              render={({ field, fieldState }) => (
-                <YStack>
-                  <Label htmlFor="name">Name</Label>
-                  <Text>{fieldState.error?.message}</Text>
-                  <Input {...field} id="name" placeholder="Workout" />
-                </YStack>
-              )}
             />
             <YStack>
               <Label>Frequency</Label>
               <XStack space alignItems="center">
-                <Controller
+                <TextField
                   control={control}
                   name="frequency"
-                  render={({
-                    field: { onChange, value, ...rest },
-                    fieldState,
-                  }) => {
-                    return (
-                      <>
-                        <Input
-                          {...rest}
-                          value={value ? value.toString() : ""}
-                          onChange={(e) => {
-                            onChange(
-                              parseInt(
-                                e.nativeEvent.text.replace(/[^0-9]/g, ""),
-                                10,
-                              ),
-                            );
-                          }}
-                          keyboardType="numeric"
-                          id="frequency"
-                        />
-
-                        <Text>{fieldState.error?.message}</Text>
-                      </>
-                    );
-                  }}
+                  placeholder="1"
+                  keyboardType="numeric"
                 />
-                <H3 opacity={0.5}>/</H3>
-                <Controller
+                <H3 opacity={0.3}>/</H3>
+                <SelectField
+                  width={150}
                   control={control}
                   name="type"
-                  render={({ field, fieldState }) => (
-                    <>
-                      <CustomSelect
-                        width={150}
-                        values={typeSelectItems}
-                        groupLabel="Type"
-                        displayValue={(value) => value.displayValue}
-                        getValue={(value) => value.value}
-                        defaultValue={typeSelectItems[1]}
-                        {...field}
-                      />
-                      <Text>{fieldState.error?.message}</Text>
-                    </>
-                  )}
+                  values={typeSelectItems}
+                  groupLabel="Type"
+                  displayValue={(value) => value.displayValue}
+                  getValue={(value) => value.value}
                 />
               </XStack>
             </YStack>
