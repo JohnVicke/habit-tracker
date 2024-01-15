@@ -19,9 +19,26 @@ export const habit = sqliteTable("habit", {
   ...timestamps,
 });
 
-export const habitRelations = relations(habit, ({ one }) => ({
+export const habitEntry = sqliteTable("habit_entry", {
+  id,
+  habitId: text("habit_id")
+    .notNull()
+    .references(() => habit.id),
+  day: integer("day", { mode: "timestamp_ms" }).notNull(),
+  ...timestamps,
+});
+
+export const habitRelations = relations(habit, ({ many, one }) => ({
   user: one(user, {
     fields: [habit.userId],
     references: [user.id],
+  }),
+  habitEntries: many(habitEntry),
+}));
+
+export const habtiEntryRelations = relations(habitEntry, ({ one }) => ({
+  habit: one(habit, {
+    fields: [habitEntry.habitId],
+    references: [habit.id],
   }),
 }));

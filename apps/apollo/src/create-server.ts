@@ -1,5 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { DateTimeResolver } from "graphql-scalars";
 
 import type { Context } from "./context";
 import { createContext } from "./context";
@@ -9,8 +10,8 @@ import { typeDefs } from "./type-defs";
 
 export function createServer() {
   const apollo = new ApolloServer<Context>({
-    typeDefs,
-    resolvers,
+    typeDefs: typeDefs,
+    resolvers: { ...resolvers, Date: DateTimeResolver },
     plugins: [createApolloLogger()],
   });
   return {

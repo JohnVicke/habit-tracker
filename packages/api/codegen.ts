@@ -11,12 +11,11 @@ const GRAPHQL_SERVER_GEN_PATH = path.join(
 );
 const CLIENT_APPS_DOCUMENTS_PATH = path.join(
   __dirname,
-  "../../apps/expo/**/*.tsx",
+  "../../apps/expo/**/*.ts",
 );
 
 const schema = {
   overwrite: true,
-  ignoreNoDocuments: true,
   schema: path.join(__dirname, "./schema.graphql"),
   documents: CLIENT_APPS_DOCUMENTS_PATH,
   emitLegacyCommonJSImports: true,
@@ -39,6 +38,9 @@ const schema = {
       preset: "client",
       config: {
         enumsAsTypes: true,
+      },
+      presetConfig: {
+        fragmentMasking: { unmaskFunctionName: "getFragmentData" },
       },
       plugins: [
         {

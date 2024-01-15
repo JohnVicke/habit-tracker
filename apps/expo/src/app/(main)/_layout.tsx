@@ -1,4 +1,4 @@
-import { Redirect, Tabs } from "expo-router";
+import { Redirect, Slot } from "expo-router";
 import { H1 } from "tamagui";
 
 import { useSession } from "~/features/auth/use-session";
@@ -14,5 +14,5 @@ export default function AppLayout() {
     return <Redirect href="/" />;
   }
 
-  return <Tabs screenOptions={{ headerShown: false }} />;
+  return <Slot />;
 }

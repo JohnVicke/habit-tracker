@@ -4,11 +4,13 @@ import { secureStore } from "~/utils/secure-store";
 
 interface AuthContextType {
   session: string | null;
+  setSession: (token: string) => void;
   isLoading: boolean;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
   session: null,
+  setSession: () => undefined,
   isLoading: false,
 });
 
@@ -42,5 +44,5 @@ function useSessionStorage() {
     void getSession();
   }, []);
 
-  return { session, isLoading };
+  return { session, isLoading, setSession };
 }

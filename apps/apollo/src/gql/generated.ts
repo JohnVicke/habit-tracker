@@ -19,6 +19,11 @@ export type Scalars = {
   Date: { input: any; output: any; }
 };
 
+export type CreateHabitEntryInput = {
+  day: Scalars['Date']['input'];
+  habitId: Scalars['ID']['input'];
+};
+
 export type CreateHabitInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   endDate?: InputMaybe<Scalars['Date']['input']>;
@@ -39,11 +44,19 @@ export type Habit = {
   createdAt: Scalars['Date']['output'];
   description?: Maybe<Scalars['String']['output']>;
   endDate?: Maybe<Scalars['Date']['output']>;
+  entries?: Maybe<Array<HabitEntry>>;
   frequency: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   type: HabitType;
   userId: Scalars['ID']['output'];
+};
+
+export type HabitEntry = {
+  __typename?: 'HabitEntry';
+  day: Scalars['Date']['output'];
+  habitId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
 };
 
 export const HabitType = {
@@ -57,7 +70,9 @@ export type HabitType = typeof HabitType[keyof typeof HabitType];
 export type Mutation = {
   __typename?: 'Mutation';
   createHabit: Habit;
+  createHabitEntry: HabitEntry;
   deleteHabit: Habit;
+  deleteHabitEntry: Scalars['ID']['output'];
   signIn: SignUpResponse;
   signUp: SignUpResponse;
   updateHabit: Habit;
@@ -69,7 +84,17 @@ export type MutationCreateHabitArgs = {
 };
 
 
+export type MutationCreateHabitEntryArgs = {
+  input: CreateHabitEntryInput;
+};
+
+
 export type MutationDeleteHabitArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteHabitEntryArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -195,10 +220,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  CreateHabitEntryInput: CreateHabitEntryInput;
   CreateHabitInput: CreateHabitInput;
   Dashboard: ResolverTypeWrapper<Dashboard>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Habit: ResolverTypeWrapper<Habit>;
+  HabitEntry: ResolverTypeWrapper<HabitEntry>;
   HabitType: HabitType;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -213,10 +240,12 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
+  CreateHabitEntryInput: CreateHabitEntryInput;
   CreateHabitInput: CreateHabitInput;
   Dashboard: Dashboard;
   Date: Scalars['Date']['output'];
   Habit: Habit;
+  HabitEntry: HabitEntry;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
@@ -242,6 +271,7 @@ export type HabitResolvers<ContextType = any, ParentType extends ResolversParent
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  entries?: Resolver<Maybe<Array<ResolversTypes['HabitEntry']>>, ParentType, ContextType>;
   frequency?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -250,9 +280,18 @@ export type HabitResolvers<ContextType = any, ParentType extends ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type HabitEntryResolvers<ContextType = any, ParentType extends ResolversParentTypes['HabitEntry'] = ResolversParentTypes['HabitEntry']> = ResolversObject<{
+  day?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  habitId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationCreateHabitArgs, 'input'>>;
+  createHabitEntry?: Resolver<ResolversTypes['HabitEntry'], ParentType, ContextType, RequireFields<MutationCreateHabitEntryArgs, 'input'>>;
   deleteHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationDeleteHabitArgs, 'id'>>;
+  deleteHabitEntry?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationDeleteHabitEntryArgs, 'id'>>;
   signIn?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'password' | 'username'>>;
   signUp?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'password' | 'username'>>;
   updateHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationUpdateHabitArgs, 'id' | 'input'>>;
@@ -281,6 +320,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Dashboard?: DashboardResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Habit?: HabitResolvers<ContextType>;
+  HabitEntry?: HabitEntryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SignUpResponse?: SignUpResponseResolvers<ContextType>;

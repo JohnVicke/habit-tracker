@@ -9,6 +9,7 @@ import { graphql } from "@ht/api/client";
 
 import { Screen } from "~/components/screen";
 import { secureStore } from "~/utils/secure-store";
+import { useSession } from "./use-session";
 
 const signInMutation = graphql(/* GraphQL */ `
   mutation SignIn($username: String!, $password: String!) {
@@ -26,6 +27,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export const SignIn = () => {
+  const { setSession } = useSession();
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -37,6 +39,7 @@ export const SignIn = () => {
   const [mutate, { loading }] = useMutation(signInMutation, {
     async onCompleted(data) {
       await secureStore.setItem("session_token", data.signIn.token);
+      setSession(data.signIn.token);
       router.push("/(main)/(tabs)/dashboard");
     },
   });

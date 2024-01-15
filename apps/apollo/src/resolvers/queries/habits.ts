@@ -9,6 +9,9 @@ export const habits: QueryResolvers<AuthenticatedContext>["habits"] = async (
 ) => {
   const habits = await db.query.habit.findMany({
     where: (habit, { eq }) => eq(habit.userId, user.id),
+    with: {
+      habitEntries: true,
+    },
   });
 
   return habits.map((habit) => habitEntityToGraphQL(habit, user.id));

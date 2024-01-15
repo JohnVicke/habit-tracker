@@ -1,5 +1,6 @@
 import type { HttpOptions } from "@apollo/client";
 import Constants from "expo-constants";
+import { router } from "expo-router";
 import {
   ApolloClient,
   createHttpLink,
@@ -28,9 +29,11 @@ export function createApolloClient() {
     if (!graphQLErrors) return;
 
     for (const err of graphQLErrors) {
+      console.log(err);
       switch (err.extensions?.code) {
         case "UNAUTHENTICATED": {
           void secureStore.deleteItem("session_token");
+          router.replace("/(auth)/auth");
           break;
         }
       }
