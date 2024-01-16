@@ -7,13 +7,7 @@ const modalOptions = {
 export default function ModalsLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="add-habit"
-        options={{
-          presentation: "modal",
-          gestureEnabled: true,
-        }}
-      />
+      <Stack.Screen name="add-habit" options={modalOptions} />
     </Stack>
   );
 }

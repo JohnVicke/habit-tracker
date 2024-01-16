@@ -1,4 +1,4 @@
-import { Dashboard } from "~/features/dashboard/dashboard";
+import { Dashboard } from "~/features/dashboard";
 
 export default function DashboardScreen() {
   return <Dashboard />;

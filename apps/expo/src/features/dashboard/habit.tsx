@@ -5,8 +5,8 @@ import { H3, XStack, YStack } from "tamagui";
 import type { FragmentType } from "@ht/api/client";
 import { getFragmentData } from "@ht/api/client";
 
+import { HabitFragment } from "~/graphql/fragments/habit";
 import { Entry } from "./entry";
-import { HabitFragment } from "./graphql";
 
 interface HabitProps {
   habit: FragmentType<typeof HabitFragment>;

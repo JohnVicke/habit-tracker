@@ -1,5 +1,5 @@
-import { Text } from "tamagui";
+import { Profile } from "~/features/profile";
 
 export default function ProfileScreen() {
-  return <Text>Profile</Text>;
+  return <Profile />;
 }

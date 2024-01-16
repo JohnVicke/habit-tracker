@@ -10,7 +10,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
-import { secureStore } from "./secure-store";
+import { secureStore } from "~/utils/secure-store";
 
 const getBaseUrl = () => {
   const debuggerHost = Constants.expoConfig?.hostUri;

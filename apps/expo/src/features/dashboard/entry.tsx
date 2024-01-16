@@ -5,7 +5,8 @@ import { Circle, Text } from "tamagui";
 import type { FragmentType } from "@ht/api/client";
 import { getFragmentData } from "@ht/api/client";
 
-import { HabitEntryFragment, useCreateHabitEntryMutation } from "./graphql";
+import { HabitEntryFragment } from "~/graphql/fragments/habit-entry";
+import { useCreateHabitEntryMutation } from "~/graphql/mutations/create-habit-entry";
 
 interface EntryProps {
   habitId: string;

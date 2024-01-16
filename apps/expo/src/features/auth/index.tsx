@@ -8,12 +8,12 @@ export function Auth() {
     <Screen>
       <H1 flex={1}>track your {"\n"}habits</H1>
       <YStack space>
-        <Button>
-          <Link href="/(auth)/sign-in">Sign in</Link>
-        </Button>
-        <Button>
-          <Link href="/(auth)/sign-up">Sign up</Link>
-        </Button>
+        <Link href="/(auth)/sign-in" asChild>
+          <Button themeInverse>Sign in</Button>
+        </Link>
+        <Link href="/(auth)/sign-up" asChild>
+          <Button themeInverse>Sign up</Button>
+        </Link>
       </YStack>
     </Screen>
   );

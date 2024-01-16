@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
+    "@dev-plugins/apollo-client": "^0.0.5",
     "@expo/metro-config": "^0.10.7",
     "@hookform/resolvers": "^3.3.4",
     "@ht/api": "workspace:^0.1.0",

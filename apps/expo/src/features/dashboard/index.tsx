@@ -3,17 +3,15 @@ import { Plus } from "@tamagui/lucide-icons";
 import { Button, YStack } from "tamagui";
 
 import { Screen } from "~/components/screen";
-import { useHabitsQuery } from "./graphql";
+import { useHabitsQuery } from "~/graphql/queries/habits";
 import { Habit } from "./habit";
 
 export function Dashboard() {
-  const habitRes = useHabitsQuery();
+  const { data } = useHabitsQuery();
 
   return (
     <Screen>
-      <YStack>
-        {habitRes?.data?.habits.map((habit) => <Habit habit={habit} />)}
-      </YStack>
+      <YStack>{data?.habits.map((habit) => <Habit habit={habit} />)}</YStack>
       <Link asChild href="/(main)/(modals)/add-habit">
         <Button
           theme="purple"

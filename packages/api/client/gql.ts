@@ -15,8 +15,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  fragment HabitEntryFragment on HabitEntry {\n    id\n    day\n    habitId\n  }\n": types.HabitEntryFragmentFragmentDoc,
     "\n  fragment HabitFragment on Habit {\n    id\n    userId\n    name\n    type\n    frequency\n    createdAt\n    endDate\n    description\n    entries {\n      ...HabitEntryFragment\n    }\n  }\n": types.HabitFragmentFragmentDoc,
-    "\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n": types.HabitsQueryDocument,
     "\n  mutation CreateHabitEntry($input: CreateHabitEntryInput!) {\n    createHabitEntry(input: $input) {\n      ...HabitEntryFragment\n    }\n  }\n": types.CreateHabitEntryDocument,
+    "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      ...HabitFragment\n    }\n  }\n": types.CreateHabitDocument,
+    "\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n": types.SignInDocument,
+    "\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n": types.SignUpDocument,
+    "\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n": types.HabitsQueryDocument,
 };
 
 /**
@@ -44,11 +47,23 @@ export function graphql(source: "\n  fragment HabitFragment on Habit {\n    id\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n"): (typeof documents)["\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n"];
+export function graphql(source: "\n  mutation CreateHabitEntry($input: CreateHabitEntryInput!) {\n    createHabitEntry(input: $input) {\n      ...HabitEntryFragment\n    }\n  }\n"): (typeof documents)["\n  mutation CreateHabitEntry($input: CreateHabitEntryInput!) {\n    createHabitEntry(input: $input) {\n      ...HabitEntryFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation CreateHabitEntry($input: CreateHabitEntryInput!) {\n    createHabitEntry(input: $input) {\n      ...HabitEntryFragment\n    }\n  }\n"): (typeof documents)["\n  mutation CreateHabitEntry($input: CreateHabitEntryInput!) {\n    createHabitEntry(input: $input) {\n      ...HabitEntryFragment\n    }\n  }\n"];
+export function graphql(source: "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      ...HabitFragment\n    }\n  }\n"): (typeof documents)["\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      ...HabitFragment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation SignIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation SignUp($username: String!, $password: String!) {\n    signUp(username: $username, password: $password) {\n      token\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n"): (typeof documents)["\n  query HabitsQuery {\n    habits {\n      ...HabitFragment\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

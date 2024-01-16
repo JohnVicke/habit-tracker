@@ -1,43 +1,15 @@
 import React from "react";
 import { Link, router } from "expo-router";
-import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "@tamagui/lucide-icons";
-import { Controller, useForm } from "react-hook-form";
-import {
-  Button,
-  Form,
-  H3,
-  Input,
-  Label,
-  Spinner,
-  Text,
-  XStack,
-  YStack,
-} from "tamagui";
+import { useForm } from "react-hook-form";
+import { Button, Form, H3, Label, Spinner, XStack, YStack } from "tamagui";
 import { z } from "zod";
 
-import { graphql } from "@ht/api/client";
-
-import { CustomSelect } from "~/components/custom-select";
 import { Screen } from "~/components/screen";
 import { SelectField } from "~/components/select-field";
 import { TextField } from "~/components/text-field";
-
-const createHabitMutation = graphql(/* GraphQL */ `
-  mutation CreateHabit($input: CreateHabitInput!) {
-    createHabit(input: $input) {
-      description
-      endDate
-      frequency
-      type
-      name
-      id
-      userId
-      createdAt
-    }
-  }
-`);
+import { useCreateHabitMutation } from "~/graphql/mutations/create-habit";
 
 const schema = z.object({
   name: z.string().min(1),
@@ -70,11 +42,8 @@ type FormValues = z.infer<typeof schema>;
 export function AddHabit() {
   const isPresented = router.canGoBack();
 
-  const [mutate, { loading }] = useMutation(createHabitMutation, {
-    onCompleted(data) {
-      console.log(data);
-    },
-  });
+  const { mutate, loading } = useCreateHabitMutation();
+
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
