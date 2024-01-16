@@ -8,11 +8,13 @@ import {
 import { TamaguiProvider } from "tamagui";
 
 import { AuthProvider } from "./features/auth/use-session";
+import { useDatabase } from "./sqlite";
 import config from "./tamagui";
 import { createApolloClient } from "./utils/apollo-client";
 
 export function RootProviders(props: React.PropsWithChildren) {
   const theme = useColorScheme() ?? "light";
+  useDatabase("habit");
   return (
     <AuthProvider>
       <ApolloProvider client={createApolloClient()}>
