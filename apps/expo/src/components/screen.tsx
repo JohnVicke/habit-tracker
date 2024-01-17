@@ -6,11 +6,11 @@ import { capitalize } from "~/utils/capitalize";
 
 export function Screen(props: React.PropsWithChildren) {
   const styles = useSafeAreaInsetsStyle(
-    { bottom: 16, top: 16, left: 8, right: 8 },
+    { bottom: 0, top: 0, left: 0, right: 0 },
     ["top", "left", "right", "bottom"],
   );
   return (
-    <View flex={1} {...styles}>
+    <View theme="blue" flex={1} {...styles} paddingHorizontal="$2">
       {props.children}
     </View>
   );
