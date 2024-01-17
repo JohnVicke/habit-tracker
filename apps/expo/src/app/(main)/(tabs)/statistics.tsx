@@ -1,5 +1,5 @@
-import { Text } from "tamagui";
+import { Statistics } from "~/features/statistics";
 
 export default function StatisticsScreen() {
-  return <Text>Statistics</Text>;
+  return <Statistics />;
 }
