@@ -1,6 +1,5 @@
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { format } from "date-fns";
-import { Circle, Text } from "tamagui";
 
 import type { FragmentType } from "@ht/api/client";
 import { getFragmentData } from "@ht/api/client";
@@ -34,15 +33,7 @@ export function Entry(props: EntryProps) {
           });
         }}
       >
-        <Circle
-          backgroundColor={entry ? "black" : "white"}
-          width="$4"
-          height="$4"
-        >
-          <Text color={entry ? "white" : "black"} fontWeight="bold">
-            {dayOfMonth}
-          </Text>
-        </Circle>
+        <Text>{dayOfMonth}</Text>
       </TouchableOpacity>
       <Text>{weekDay}</Text>
     </View>

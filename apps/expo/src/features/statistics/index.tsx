@@ -1,12 +1,11 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
-import { H1, H2, YStack } from "tamagui";
 
 import { Screen } from "~/components/screen";
 import { WeeklyProgress } from "./weekly-progress";
@@ -45,9 +44,9 @@ export function Statistics() {
             }}
             style={headerAnimatedStyle}
           >
-            <H1>Last month</H1>
+            <Text>Last month</Text>
           </Animated.View>
-          <YStack space>
+          <View>
             <DashboardSection>
               <DashboardSection.Title>Insights</DashboardSection.Title>
               <WeeklyProgress />
@@ -56,7 +55,7 @@ export function Statistics() {
               <DashboardSection.Title>Insights</DashboardSection.Title>
               <WeeklyProgress />
             </DashboardSection>
-          </YStack>
+          </View>
         </View>
       </Animated.ScrollView>
     </Screen>
@@ -64,11 +63,11 @@ export function Statistics() {
 }
 
 function DashboardSection(props: React.PropsWithChildren) {
-  return <YStack space="$2">{props.children}</YStack>;
+  return <View>{props.children}</View>;
 }
 
 function DashboardSectionTitle(props: React.PropsWithChildren) {
-  return <H2>{props.children}</H2>;
+  return <Text>{props.children}</Text>;
 }
 
 DashboardSection.Title = DashboardSectionTitle;

@@ -1,7 +1,6 @@
 import React from "react";
+import { View } from "react-native";
 import { Link, Tabs } from "expo-router";
-import { BarChart, Heart, Plus } from "@tamagui/lucide-icons";
-import { Circle, View } from "tamagui";
 
 export default function AppLayout() {
   return (
@@ -22,57 +21,16 @@ function TabBar(props: TabBarProps) {
   const { state, descriptors, navigation, insets } = props;
   return (
     <View
-      flexDirection="row"
-      height="$5"
-      justifyContent="space-between"
-      alignItems="center"
-      position="relative"
-      paddingHorizontal="$4"
+      className="relative flex-row items-center justify-between px-4"
       style={insets}
     >
-      <TabButton>
-        <Link href="/(main)/(tabs)/dashboard">
-          <Heart />
-        </Link>
-      </TabButton>
+      <Link href="/(main)/(tabs)/dashboard">heart</Link>
       <Link asChild href="/(main)/(modals)/add-habit">
-        <Circle
-          elevate
-          animation="bouncy"
-          pressStyle={{
-            scale: 0.95,
-          }}
-          bottom="$4"
-          bordered
-          backgroundColor="$background"
-          size="$6"
-        >
-          <Plus />
-        </Circle>
+        Plus
       </Link>
       <Link href="/(main)/(tabs)/statistics" asChild>
-        <BarChart />
+        BarChart
       </Link>
-    </View>
-  );
-}
-
-interface TabButtonProps {
-  active?: boolean;
-}
-
-function TabButton({
-  children,
-  active = false,
-}: React.PropsWithChildren<TabButtonProps>) {
-  return (
-    <View
-      theme={active ? "blue" : ""}
-      position="relative"
-      animation="bouncy"
-      pressStyle={{ scale: 0.9 }}
-    >
-      {children}
     </View>
   );
 }

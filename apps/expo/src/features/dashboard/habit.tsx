@@ -1,6 +1,5 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { add, isSameDay } from "date-fns";
-import { H3, XStack, YStack } from "tamagui";
 
 import type { FragmentType } from "@ht/api/client";
 import { getFragmentData } from "@ht/api/client";
@@ -15,29 +14,26 @@ interface HabitProps {
 export function Habit(props: HabitProps) {
   const habit = getFragmentData(HabitFragment, props.habit);
   return (
-    <YStack space={4} key={habit.id}>
-      <H3>{habit.name}</H3>
+    <View>
       <ScrollView horizontal>
-        <XStack space>
-          {new Array(7).fill(null).map((_, index) => {
-            const today = new Date();
-            const day = add(today, { days: index });
+        {new Array(7).fill(null).map((_, index) => {
+          const today = new Date();
+          const day = add(today, { days: index });
 
-            const entryOnDay = habit.entries?.find((entry) =>
-              isSameDay(entry.day, day),
-            );
+          const entryOnDay = habit.entries?.find((entry) =>
+            isSameDay(entry.day, day),
+          );
 
-            return (
-              <Entry
-                key={`date-entry-${index}-${day.getTime()}`}
-                habitId={habit.id}
-                entry={entryOnDay}
-                day={add(new Date(), { days: index })}
-              />
-            );
-          })}
-        </XStack>
+          return (
+            <Entry
+              key={`date-entry-${index}-${day.getTime()}`}
+              habitId={habit.id}
+              entry={entryOnDay}
+              day={add(new Date(), { days: index })}
+            />
+          );
+        })}
       </ScrollView>
-    </YStack>
+    </View>
   );
 }

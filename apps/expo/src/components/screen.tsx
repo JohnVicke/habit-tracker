@@ -1,6 +1,6 @@
 import type { Edge } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View } from "tamagui";
 
 import { capitalize } from "~/utils/capitalize";
 
@@ -10,7 +10,7 @@ export function Screen(props: React.PropsWithChildren) {
     ["top", "left", "right", "bottom"],
   );
   return (
-    <View theme="blue" flex={1} {...styles} paddingHorizontal="$2">
+    <View className="flex-1" {...styles}>
       {props.children}
     </View>
   );
