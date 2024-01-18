@@ -1,5 +1,5 @@
+import { Text } from "react-native";
 import { router } from "expo-router";
-import { Button } from "tamagui";
 
 import { Screen } from "~/components/screen";
 import { useDeleteHabitMutation } from "~/graphql/mutations/delete-habit";
@@ -12,8 +12,7 @@ export function Habit(props: HabitProps) {
   const { mutate, loading } = useDeleteHabitMutation();
   return (
     <Screen>
-      <Button
-        theme="red"
+      <Text
         onPress={() =>
           mutate({
             variables: { deleteHabitId: props.id },
@@ -24,7 +23,7 @@ export function Habit(props: HabitProps) {
         }
       >
         Remove Habit
-      </Button>
+      </Text>
     </Screen>
   );
 }

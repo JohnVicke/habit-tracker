@@ -3,7 +3,7 @@ import type { KeyboardType } from "react-native";
 import { Text, TextInput, View } from "react-native";
 import { Controller } from "react-hook-form";
 
-interface TextFieldProps<T extends FieldValues> {
+interface StreakSelectFieldProps<T extends FieldValues> {
   control: Control<T>;
   name: FieldValue<T>;
   placeholder?: string;
@@ -11,7 +11,9 @@ interface TextFieldProps<T extends FieldValues> {
   keyboardType?: KeyboardType;
 }
 
-export function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
+export function StreakSelectField<T extends FieldValues>(
+  props: StreakSelectFieldProps<T>,
+) {
   const keyboardType = props.keyboardType ?? "default";
 
   return (
@@ -19,7 +21,7 @@ export function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
       control={props.control}
       name={props.name}
       render={({ field, fieldState }) => (
-        <View>
+        <View className="flex-1">
           {props.label && (
             <Text className="mb-2 font-qs-regular text-slate-800">
               {props.label}

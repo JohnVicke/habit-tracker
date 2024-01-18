@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        "qs-regular": "Quicksand_400Regular",
+        "qs-bold": "Quicksand_700Bold",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

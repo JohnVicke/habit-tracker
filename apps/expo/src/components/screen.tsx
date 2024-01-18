@@ -1,16 +1,18 @@
 import type { Edge } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View } from "tamagui";
 
 import { capitalize } from "~/utils/capitalize";
 
 export function Screen(props: React.PropsWithChildren) {
-  const styles = useSafeAreaInsetsStyle(
-    { bottom: 0, top: 0, left: 0, right: 0 },
-    ["top", "left", "right", "bottom"],
-  );
+  const styles = useSafeAreaInsetsStyle(["top", "left", "right", "bottom"], {
+    bottom: 8,
+    top: 8,
+    left: 16,
+    right: 16,
+  });
   return (
-    <View theme="blue" flex={1} {...styles} paddingHorizontal="$2">
+    <View {...styles} className="flex-1 bg-slate-200">
       {props.children}
     </View>
   );
@@ -19,8 +21,8 @@ export function Screen(props: React.PropsWithChildren) {
 type Property = "margin" | "padding";
 
 function useSafeAreaInsetsStyle(
-  spacing: Record<Edge, number>,
   edges: Edge[] = [],
+  spacing: Record<Edge, number> = { bottom: 0, top: 8, left: 8, right: 8 },
   property: Property = "padding",
 ) {
   const insets = useSafeAreaInsets();

@@ -1,4 +1,4 @@
-import { Text } from "tamagui";
+import { Text } from "react-native";
 
 import { Screen } from "~/components/screen";
 

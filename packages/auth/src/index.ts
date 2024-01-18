@@ -22,5 +22,6 @@ export const auth = lucia({
 });
 
 export type Auth = typeof auth;
+export type { Session } from "lucia";
 
 export { LuciaError } from "lucia";

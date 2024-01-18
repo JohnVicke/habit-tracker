@@ -1,5 +1,6 @@
 import type { StandaloneServerContextFunctionArgument } from "@apollo/server/standalone";
 
+import type { Session } from "@ht/auth";
 import type { InferSelectModel, schema } from "@ht/db";
 import { auth } from "@ht/auth";
 import { db } from "@ht/db";
@@ -13,6 +14,7 @@ export interface BaseContext {
 
 export interface AuthenticatedContext extends BaseContext {
   user: InferSelectModel<(typeof schema)["user"]>;
+  session: Session;
 }
 
 const nonAuthRoutesOperations = ["SignIn", "SignUp", "IntrospectionQuery"];
@@ -40,6 +42,7 @@ export async function createContext(
 
   return {
     ...baseContext,
+    session,
     user: {
       id: session.user.id,
       username: session.user.username,

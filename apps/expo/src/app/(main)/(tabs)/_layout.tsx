@@ -1,16 +1,33 @@
 import React from "react";
+import { Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link, Tabs } from "expo-router";
-import { BarChart, Heart, Plus } from "@tamagui/lucide-icons";
-import { Circle, View } from "tamagui";
+import { BarChart3, CalendarCheck2, Plus } from "lucide-react-native";
+
+import { insetsAsProperty } from "~/utils/insets-as-property";
 
 export default function AppLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
+        header: Header,
       }}
       tabBar={TabBar}
     />
+  );
+}
+
+function Header() {
+  const styles = useSafeAreaInsets();
+  return (
+    <View {...styles} className="bg-slate-200 px-4 py-2">
+      <Text className="font-qs-regular text-lg">
+        hello,{"\n"}
+        <Text>Viktor Malmedal</Text>
+      </Text>
+      <View className="my-2 border-b border-slate-300" />
+    </View>
   );
 }
 
@@ -19,60 +36,23 @@ type TabBarProps = React.ComponentProps<
 >;
 
 function TabBar(props: TabBarProps) {
-  const { state, descriptors, navigation, insets } = props;
+  const { insets } = props;
+  const padding = insetsAsProperty(insets);
   return (
-    <View
-      flexDirection="row"
-      height="$5"
-      justifyContent="space-between"
-      alignItems="center"
-      position="relative"
-      paddingHorizontal="$4"
-      style={insets}
-    >
-      <TabButton>
+    <View style={padding} className="flex h-16 items-start bg-slate-300">
+      <View className="w-full flex-row justify-around">
         <Link href="/(main)/(tabs)/dashboard">
-          <Heart />
+          <CalendarCheck2 className="text-slate-900" />
         </Link>
-      </TabButton>
-      <Link asChild href="/(main)/(modals)/add-habit">
-        <Circle
-          elevate
-          animation="bouncy"
-          pressStyle={{
-            scale: 0.95,
-          }}
-          bottom="$4"
-          bordered
-          backgroundColor="$background"
-          size="$6"
-        >
-          <Plus />
-        </Circle>
-      </Link>
-      <Link href="/(main)/(tabs)/statistics" asChild>
-        <BarChart />
-      </Link>
-    </View>
-  );
-}
-
-interface TabButtonProps {
-  active?: boolean;
-}
-
-function TabButton({
-  children,
-  active = false,
-}: React.PropsWithChildren<TabButtonProps>) {
-  return (
-    <View
-      theme={active ? "blue" : ""}
-      position="relative"
-      animation="bouncy"
-      pressStyle={{ scale: 0.9 }}
-    >
-      {children}
+        <Link href="/add-habit">
+          <View className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200">
+            <Plus className="text-slate-900" />
+          </View>
+        </Link>
+        <Link href="/(main)/(tabs)/statistics">
+          <BarChart3 className="text-slate-900" />
+        </Link>
+      </View>
     </View>
   );
 }

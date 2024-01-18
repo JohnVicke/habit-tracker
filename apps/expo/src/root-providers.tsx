@@ -1,35 +1,35 @@
-import { Platform, useColorScheme } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { ApolloProvider } from "@apollo/client";
-import { useApolloClientDevTools } from "@dev-plugins/apollo-client";
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { TamaguiProvider } from "tamagui";
+  Quicksand_300Light,
+  Quicksand_400Regular,
+  Quicksand_500Medium,
+  Quicksand_600SemiBold,
+  Quicksand_700Bold,
+  useFonts,
+} from "@expo-google-fonts/quicksand";
 
 import { AuthProvider } from "./features/auth/use-session";
 import { createApolloClient } from "./graphql/create-apollo-client";
-import config from "./tamagui";
 
 const client = createApolloClient();
 
 export function RootProviders(props: React.PropsWithChildren) {
-  const theme = useColorScheme() ?? "light";
-  // useApolloClientDevTools(client);
+  const [loaded, error] = useFonts({
+    Quicksand_700Bold,
+    Quicksand_300Light,
+    Quicksand_500Medium,
+    Quicksand_400Regular,
+    Quicksand_600SemiBold,
+  });
+
+  if (!loaded && !error) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <AuthProvider>
-      <ApolloProvider client={client}>
-        <TamaguiProvider
-          config={config}
-          defaultTheme={theme}
-          disableInjectCSS={Platform.OS !== "web"}
-        >
-          <ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
-            {props.children}
-          </ThemeProvider>
-        </TamaguiProvider>
-      </ApolloProvider>
+      <ApolloProvider client={client}>{props.children}</ApolloProvider>
     </AuthProvider>
   );
 }

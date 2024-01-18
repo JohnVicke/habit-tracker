@@ -74,6 +74,7 @@ export type Mutation = {
   deleteHabit: Scalars['ID']['output'];
   deleteHabitEntry: Scalars['ID']['output'];
   signIn: SignUpResponse;
+  signOut: Scalars['Boolean']['output'];
   signUp: SignUpResponse;
   updateHabit: Habit;
 };
@@ -293,6 +294,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteHabit?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationDeleteHabitArgs, 'id'>>;
   deleteHabitEntry?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationDeleteHabitEntryArgs, 'id'>>;
   signIn?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'password' | 'username'>>;
+  signOut?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'password' | 'username'>>;
   updateHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationUpdateHabitArgs, 'id' | 'input'>>;
 }>;

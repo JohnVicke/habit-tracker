@@ -71,6 +71,7 @@ export type Mutation = {
   deleteHabit: Scalars['ID']['output'];
   deleteHabitEntry: Scalars['ID']['output'];
   signIn: SignUpResponse;
+  signOut: Scalars['Boolean']['output'];
   signUp: SignUpResponse;
   updateHabit: Habit;
 };

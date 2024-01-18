@@ -70,6 +70,7 @@ type Query {
 type Mutation {
   signUp(username: String!, password: String!): SignUpResponse!
   signIn(username: String!, password: String!): SignUpResponse!
+  signOut: Boolean!
   createHabit(input: CreateHabitInput!): Habit!
   createHabitEntry(input: CreateHabitEntryInput!): HabitEntry!
   deleteHabitEntry(id: ID!): ID!

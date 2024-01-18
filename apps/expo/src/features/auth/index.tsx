@@ -1,20 +1,20 @@
+import { Text, View } from "react-native";
 import { Link } from "expo-router";
-import { Button, H1, YStack } from "tamagui";
 
 import { Screen } from "~/components/screen";
 
 export function Auth() {
   return (
     <Screen>
-      <H1 flex={1}>track your {"\n"}habits</H1>
-      <YStack space>
+      <Text>track your {"\n"}habits</Text>
+      <View>
         <Link href="/(auth)/sign-in" asChild>
-          <Button themeInverse>Sign in</Button>
+          Sign in
         </Link>
         <Link href="/(auth)/sign-up" asChild>
-          <Button themeInverse>Sign up</Button>
+          Sign up
         </Link>
-      </YStack>
+      </View>
     </Screen>
   );
 }
