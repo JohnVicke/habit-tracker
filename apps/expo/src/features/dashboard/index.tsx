@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { ScrollView, YStack } from "tamagui";
 
 import { Screen } from "~/components/screen";
@@ -11,9 +10,7 @@ export function Dashboard() {
   return (
     <Screen>
       <ScrollView>
-        <YStack>
-          {habitRes?.data?.habits.map((habit) => <Habit habit={habit} />)}
-        </YStack>
+        <YStack>{data?.habits.map((habit) => <Habit habit={habit} />)}</YStack>
       </ScrollView>
     </Screen>
   );
