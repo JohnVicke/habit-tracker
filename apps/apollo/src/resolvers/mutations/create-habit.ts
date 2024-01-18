@@ -16,8 +16,6 @@ export const createHabit: MutationResolvers<AuthenticatedContext>["createHabit"]
       .values(createHabitInputToInsertModel(args.input, user.id))
       .returning();
 
-    console.log(inserted);
-
     const entity = inserted.at(0);
 
     if (!entity) {

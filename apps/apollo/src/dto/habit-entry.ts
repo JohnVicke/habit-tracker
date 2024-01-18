@@ -1,4 +1,5 @@
 import type { InferInsertModel, InferSelectModel, schema } from "@ht/db";
+import { createId } from "@ht/db";
 
 import type { CreateHabitEntryInput } from "../gql/generated";
 
@@ -9,6 +10,7 @@ export function createHabitEntryInputToInsertModel(
   input: CreateHabitEntryInput,
 ): HabitEntryInsertModel {
   return {
+    id: createId(),
     habitId: input.habitId,
     day: input.day,
   };

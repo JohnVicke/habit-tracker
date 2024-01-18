@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { Plus } from "@tamagui/lucide-icons";
-import { Button, YStack } from "tamagui";
+import { Button, ScrollView, YStack } from "tamagui";
 
 import { Screen } from "~/components/screen";
 import { useHabitsQuery } from "~/graphql/queries/habits";
@@ -11,7 +11,11 @@ export function Dashboard() {
 
   return (
     <Screen>
-      <YStack>{data?.habits.map((habit) => <Habit habit={habit} />)}</YStack>
+      <ScrollView>
+        <YStack space>
+          {data?.habits.map((habit) => <Habit habit={habit} />)}
+        </YStack>
+      </ScrollView>
       <Link asChild href="/(main)/(modals)/add-habit">
         <Button
           theme="purple"

@@ -74,5 +74,5 @@ type Mutation {
   createHabitEntry(input: CreateHabitEntryInput!): HabitEntry!
   deleteHabitEntry(id: ID!): ID!
   updateHabit(id: ID!, input: UpdateHabitInput!): Habit!
-  deleteHabit(id: ID!): Habit!
+  deleteHabit(id: ID!): ID!
 }

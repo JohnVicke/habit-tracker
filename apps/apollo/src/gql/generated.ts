@@ -71,7 +71,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createHabit: Habit;
   createHabitEntry: HabitEntry;
-  deleteHabit: Habit;
+  deleteHabit: Scalars['ID']['output'];
   deleteHabitEntry: Scalars['ID']['output'];
   signIn: SignUpResponse;
   signUp: SignUpResponse;
@@ -290,7 +290,7 @@ export type HabitEntryResolvers<ContextType = any, ParentType extends ResolversP
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationCreateHabitArgs, 'input'>>;
   createHabitEntry?: Resolver<ResolversTypes['HabitEntry'], ParentType, ContextType, RequireFields<MutationCreateHabitEntryArgs, 'input'>>;
-  deleteHabit?: Resolver<ResolversTypes['Habit'], ParentType, ContextType, RequireFields<MutationDeleteHabitArgs, 'id'>>;
+  deleteHabit?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationDeleteHabitArgs, 'id'>>;
   deleteHabitEntry?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationDeleteHabitEntryArgs, 'id'>>;
   signIn?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'password' | 'username'>>;
   signUp?: Resolver<ResolversTypes['SignUpResponse'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'password' | 'username'>>;

@@ -13,3 +13,4 @@ export const client = createClient({
 
 export const db = drizzle(client, { schema });
 export { LibsqlError } from "@libsql/client";
+export { createId } from "./utils/sql";

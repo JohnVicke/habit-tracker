@@ -36,11 +36,11 @@ export function Entry(props: EntryProps) {
         }}
       >
         <Circle
-          backgroundColor={entry ? "black" : "white"}
+          backgroundColor={entry ? "white" : "black"}
           width="$4"
           height="$4"
         >
-          <Text color={entry ? "white" : "black"} fontWeight="bold">
+          <Text color={entry ? "black" : "white"} fontWeight="bold">
             {dayOfMonth}
           </Text>
         </Circle>

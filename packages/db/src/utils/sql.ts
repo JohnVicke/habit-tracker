@@ -1,6 +1,7 @@
-import { createId } from "@paralleldrive/cuid2";
 import { sql } from "drizzle-orm";
 import { integer, text } from "drizzle-orm/sqlite-core";
+
+export { createId } from "@paralleldrive/cuid2";
 
 export const timestamps = {
   createdAt: integer("created_at", { mode: "timestamp_ms" })
@@ -8,4 +9,4 @@ export const timestamps = {
     .default(sql`CURRENT_TIMESTAMP`),
 };
 
-export const id = text("id").primaryKey().default(createId());
+export const id = text("id").primaryKey().notNull();

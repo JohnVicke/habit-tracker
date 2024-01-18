@@ -1,16 +1,10 @@
-import { router } from "expo-router";
-import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form, H1, H3, Input, Label, Spinner, YStack } from "tamagui";
 import { z } from "zod";
 
-import { graphql } from "@ht/api/client";
-
 import { Screen } from "~/components/screen";
 import { useSignInMutation } from "~/graphql/mutations/sign-in";
-import { secureStore } from "~/utils/secure-store";
-import { useSession } from "./use-session";
 
 const schema = z.object({
   username: z.string().min(3),
