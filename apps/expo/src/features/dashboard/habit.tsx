@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import { Link } from "expo-router";
 
 import type { FragmentType } from "@ht/api/client";
 import { getFragmentData } from "@ht/api/client";

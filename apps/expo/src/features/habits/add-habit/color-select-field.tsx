@@ -1,14 +1,15 @@
-import type { Control, FieldValue, FieldValues } from "react-hook-form";
+import type { Control, FieldValue, FieldValues, Path } from "react-hook-form";
 import type { GestureResponderEvent } from "react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Controller } from "react-hook-form";
 
+import { Typography } from "~/components/typography";
 import { objectKeys } from "~/utils/object-keys";
 
 interface ColorSelectFieldProps<T extends FieldValues> {
   control: Control<T>;
-  name: FieldValue<T>;
+  name: Path<T>;
   label?: string;
 }
 
@@ -21,11 +22,7 @@ export function ColorSelectField<T extends FieldValues>(
       name={props.name}
       render={({ field }) => (
         <View className="gap-y-2">
-          {props.label && (
-            <Text className="font-qs-regular text-slate-800">
-              {props.label}
-            </Text>
-          )}
+          {props.label && <Typography>{props.label}</Typography>}
           <View className="flex gap-y-4">
             <ColorGroup>
               {objectKeys(colors).map((color) => (
@@ -62,20 +59,20 @@ const colors = {
 } as const;
 
 const activeColors = {
-  teal: "border-teal-600 ",
-  emerald: "border-emerald-600",
-  indigo: "border-indigo-600",
-  purple: "border-purple-600",
-  pink: "border-pink-600",
-  red: "border-red-600",
-  orange: "border-orange-600",
-  blue: "border-blue-600",
-  sky: "border-sky-600",
-  violet: "border-violet-600",
-  fuchsia: "border-fuchsia-600",
-  rose: "border-rose-600",
-  amber: "border-amber-600",
-  lime: "border-lime-600",
+  teal: "border-teal-500 ",
+  emerald: "border-emerald-500",
+  indigo: "border-indigo-500",
+  purple: "border-purple-500",
+  pink: "border-pink-500",
+  red: "border-red-500",
+  orange: "border-orange-500",
+  blue: "border-blue-500",
+  sky: "border-sky-500",
+  violet: "border-violet-500",
+  fuchsia: "border-fuchsia-500",
+  rose: "border-rose-500",
+  amber: "border-amber-500",
+  lime: "border-lime-500",
 } as const;
 
 interface ColorBoxProps {

@@ -1,16 +1,19 @@
 import type { LucideIcon } from "lucide-react-native";
-import type { Control, FieldValue, FieldValues } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
 import type { GestureResponderEvent } from "react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { Dumbbell } from "lucide-react-native";
+import { TouchableOpacity, View } from "react-native";
+import { Book, Code, Dumbbell } from "lucide-react-native";
 import { Controller } from "react-hook-form";
 
+import { Typography } from "~/components/typography";
+
 const defaultEmojiList = ["🏋️", "🏃", "🧘", "🧗", "🏊", "🚴", "🏄", "🏌️"];
+const icons = [Dumbbell, Code, Book];
 
 interface EmojiSelectFieldProps<T extends FieldValues> {
   control: Control<T>;
-  name: FieldValue<T>;
+  name: Path<T>;
   label?: string;
 }
 
@@ -23,11 +26,7 @@ export function EmojiSelectField<T extends FieldValues>(
       name={props.name}
       render={({ field }) => (
         <View className="gap-y-2">
-          {props.label && (
-            <Text className="font-qs-regular text-slate-800">
-              {props.label}
-            </Text>
-          )}
+          {props.label && <Typography>{props.label}</Typography>}
           <View className="flex gap-y-4">
             <EmojiGroup>
               {defaultEmojiList.map((emoji) => (
@@ -38,11 +37,14 @@ export function EmojiSelectField<T extends FieldValues>(
                   emoji={emoji}
                 />
               ))}
-              <Icon
-                active={field.value === "dumbell"}
-                onPress={() => field.onChange("dumbell")}
-                icon={Dumbbell}
-              />
+              {icons.map((icon) => (
+                <Icon
+                  active={field.value === icon}
+                  onPress={() => field.onChange(icon)}
+                  key={icon.displayName}
+                  icon={icon}
+                />
+              ))}
             </EmojiGroup>
           </View>
         </View>
@@ -70,8 +72,8 @@ function Icon(props: IconProps) {
           props.active && "border-2 border-slate-600 shadow shadow-slate-900"
         }`}
       >
-        {RenderIcon && <RenderIcon className="text-slate-700" />}
-        {props.emoji && <Text className="text-xl">{props.emoji}</Text>}
+        {RenderIcon && <RenderIcon className="text-slate-800" />}
+        {props.emoji && <Typography size="lg">{props.emoji}</Typography>}
       </View>
     </TouchableOpacity>
   );

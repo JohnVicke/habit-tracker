@@ -39,7 +39,7 @@ function TabBar(props: TabBarProps) {
   const { insets } = props;
   const padding = insetsAsProperty(insets);
   return (
-    <View style={padding} className="flex h-16 items-start bg-slate-300">
+    <View style={padding} className="flex h-10 items-start bg-slate-300">
       <View className="w-full flex-row justify-around">
         <Link href="/(main)/(tabs)/dashboard">
           <CalendarCheck2 className="text-slate-900" />

@@ -1,11 +1,11 @@
-import type { Control, FieldValue, FieldValues } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
 import type { KeyboardType } from "react-native";
 import { Text, TextInput, View } from "react-native";
 import { Controller } from "react-hook-form";
 
 interface TextFieldProps<T extends FieldValues> {
   control: Control<T>;
-  name: FieldValue<T>;
+  name: Path<T>;
   placeholder?: string;
   label?: string;
   keyboardType?: KeyboardType;

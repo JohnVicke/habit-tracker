@@ -8,6 +8,7 @@ import {
   Quicksand_700Bold,
   useFonts,
 } from "@expo-google-fonts/quicksand";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import { AuthProvider } from "./features/auth/use-session";
 import { createApolloClient } from "./graphql/create-apollo-client";
@@ -28,8 +29,10 @@ export function RootProviders(props: React.PropsWithChildren) {
   }
 
   return (
-    <AuthProvider>
-      <ApolloProvider client={client}>{props.children}</ApolloProvider>
-    </AuthProvider>
+    <BottomSheetModalProvider>
+      <AuthProvider>
+        <ApolloProvider client={client}>{props.children}</ApolloProvider>
+      </AuthProvider>
+    </BottomSheetModalProvider>
   );
 }

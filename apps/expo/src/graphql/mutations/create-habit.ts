@@ -1,5 +1,4 @@
 import { router } from "expo-router";
-import { useApolloClient } from "@apollo/client";
 
 import { graphql } from "@ht/api/client";
 
@@ -15,8 +14,6 @@ const createHabitMutation = graphql(/* GraphQL */ `
 `);
 
 export const useCreateHabitMutation = () => {
-  const client = useApolloClient();
-  console.log({ queries: client.getObservableQueries() });
   return useBetterMutation(createHabitMutation, {
     refetchQueries: [habitsQuery],
     onCompleted(_data) {
