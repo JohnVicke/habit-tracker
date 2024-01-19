@@ -1,6 +1,6 @@
 import React from "react";
 import { KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Minus, Plus } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
@@ -55,95 +55,103 @@ export function AddHabit() {
     },
   });
 
+  const goBack = () => {
+    if (!router.canGoBack()) {
+      return router.push("/(main)/(tabs)/dashboard");
+    }
+    return router.back();
+  };
+
   return (
     <Screen>
-      <View className="gap-y-4">
-        <TextField
-          control={control}
-          name="name"
-          placeholder="Workout"
-          label="Name"
-        />
-        <TextField
-          control={control}
-          name="description"
-          label="Description"
-          placeholder="Workout three times a week"
-        />
-        <View className="flex-row gap-x-2">
-          <Controller
+      <Button onPress={goBack}>Go back</Button>
+      <View className="flex-1 justify-between">
+        <View className="gap-y-4">
+          <TextField
             control={control}
-            name="interval"
-            render={({ field }) => {
-              return (
-                <StreakSelectField
+            name="name"
+            placeholder="Workout"
+            label="Name"
+          />
+          <TextField
+            control={control}
+            name="description"
+            label="Description"
+            placeholder="Workout three times a week"
+          />
+          <View className="flex-row gap-x-2">
+            <Controller
+              control={control}
+              name="interval"
+              render={({ field }) => {
+                return (
+                  <StreakSelectField
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Frequency"
+                    label="Frequency"
+                    showOccurance={!!field.value}
+                    occuranceField={() => (
+                      <Controller
+                        control={control}
+                        name="occurances"
+                        render={({ field: occuranceField }) => (
+                          <View className="flex-row items-center justify-between gap-x-2 rounded bg-slate-200 py-1 pl-2 pr-1">
+                            <View className="flex-row gap-2">
+                              <Typography>{occuranceField.value} /</Typography>
+                              <Typography>{field.value}</Typography>
+                            </View>
+                            <View className="flex-row gap-x-1">
+                              <TouchableOpacity
+                                className="rounded-l bg-slate-800 p-2"
+                                onPress={() => {
+                                  if (occuranceField.value < 2) {
+                                    return;
+                                  }
+                                  occuranceField.onChange(
+                                    occuranceField.value - 1,
+                                  );
+                                }}
+                              >
+                                <Minus className="text-slate-100" />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                className="rounded-r bg-slate-800 p-2"
+                                onPress={() =>
+                                  occuranceField.onChange(
+                                    occuranceField.value + 1,
+                                  )
+                                }
+                              >
+                                <Plus className="text-slate-100" />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        )}
+                      />
+                    )}
+                  />
+                );
+              }}
+            />
+            <Controller
+              control={control}
+              name="reminder"
+              render={({ field }) => (
+                <NotificiationSelectField
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder="Frequency"
-                  label="Frequency"
-                  showOccurance={!!field.value}
-                  occuranceField={() => (
-                    <Controller
-                      control={control}
-                      name="occurances"
-                      render={({ field: occuranceField }) => (
-                        <View className="flex-row items-center justify-between gap-x-2 rounded bg-slate-200 py-1 pl-2 pr-1">
-                          <View className="flex-row gap-2">
-                            <Typography>{occuranceField.value} /</Typography>
-                            <Typography>{field.value}</Typography>
-                          </View>
-                          <View className="flex-row gap-x-1">
-                            <TouchableOpacity
-                              className="rounded-l bg-slate-800 p-2"
-                              onPress={() => {
-                                if (occuranceField.value < 2) {
-                                  return;
-                                }
-                                occuranceField.onChange(
-                                  occuranceField.value - 1,
-                                );
-                              }}
-                            >
-                              <Minus className="text-slate-100" />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              className="rounded-r bg-slate-800 p-2"
-                              onPress={() =>
-                                occuranceField.onChange(
-                                  occuranceField.value + 1,
-                                )
-                              }
-                            >
-                              <Plus className="text-slate-100" />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      )}
-                    />
-                  )}
+                  placeholder="Reminder"
+                  label="Reminder"
                 />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="reminder"
-            render={({ field }) => (
-              <NotificiationSelectField
-                value={field.value}
-                onChange={field.onChange}
-                placeholder="Reminder"
-                label="Reminder"
-              />
-            )}
-          />
+              )}
+            />
+          </View>
+          <EmojiSelectField label="Emoji" control={control} name="emoji" />
+          <ColorSelectField label="Color" control={control} name="color" />
         </View>
-        <EmojiSelectField label="Emoji" control={control} name="emoji" />
-        <ColorSelectField label="Color" control={control} name="color" />
-      </View>
-      <KeyboardAvoidingView>
         <Button>Create habit</Button>
-      </KeyboardAvoidingView>
+      </View>
     </Screen>
   );
 }

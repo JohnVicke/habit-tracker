@@ -73,7 +73,7 @@ function Icon(props: IconProps) {
         }`}
       >
         {RenderIcon && <RenderIcon className="text-slate-800" />}
-        {props.emoji && <Typography size="lg">{props.emoji}</Typography>}
+        {props.emoji && <Typography size="xl">{props.emoji}</Typography>}
       </View>
     </TouchableOpacity>
   );

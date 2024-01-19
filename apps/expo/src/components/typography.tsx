@@ -67,7 +67,7 @@ const fontFamily = {
 const fontSize = {
   xs: "text-xs",
   sm: "text-sm",
-  md: "text-base",
+  md: "text-md",
   lg: "text-xl",
   xl: "text-2xl",
   xxl: "text-6xl",

@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { Link, Tabs } from "expo-router";
 import { BarChart3, CalendarCheck2, Plus } from "lucide-react-native";
 
@@ -10,24 +9,10 @@ export default function AppLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: true,
-        header: Header,
+        headerShown: false,
       }}
       tabBar={TabBar}
     />
-  );
-}
-
-function Header() {
-  const styles = useSafeAreaInsets();
-  return (
-    <View {...styles} className="bg-slate-200 px-4 py-2">
-      <Text className="font-qs-regular text-lg">
-        hello,{"\n"}
-        <Text>Viktor Malmedal</Text>
-      </Text>
-      <View className="my-2 border-b border-slate-300" />
-    </View>
   );
 }
 
@@ -39,17 +24,17 @@ function TabBar(props: TabBarProps) {
   const { insets } = props;
   const padding = insetsAsProperty(insets);
   return (
-    <View style={padding} className="flex h-10 items-start bg-slate-300">
-      <View className="w-full flex-row justify-around">
-        <Link href="/(main)/(tabs)/dashboard">
+    <View style={padding} className="relative flex h-10 bg-slate-300">
+      <View className="flex w-full flex-row items-end justify-around">
+        <Link href="/(main)/(tabs)/dashboard" asChild>
           <CalendarCheck2 className="text-slate-900" />
         </Link>
-        <Link href="/add-habit">
-          <View className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200">
-            <Plus className="text-slate-900" />
+        <Link href="/add-habit" asChild>
+          <View className="mb-0 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-200 shadow shadow-emerald-300">
+            <Plus className="text-emerald-900" />
           </View>
         </Link>
-        <Link href="/(main)/(tabs)/statistics">
+        <Link href="/(main)/(tabs)/statistics" asChild>
           <BarChart3 className="text-slate-900" />
         </Link>
       </View>

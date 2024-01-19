@@ -85,7 +85,7 @@ function ColorBox(props: ColorBoxProps) {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View
-        className={`flex h-12 w-12 items-center justify-center rounded-[0.5rem] p-2 
+        className={`flex h-10 w-10 items-center justify-center rounded-[0.5rem] p-2 
 ${colors[props.color]}
 ${props.active ? `border-2 ${activeColors[props.color]}` : ""}
 `}
