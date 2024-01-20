@@ -1,13 +1,19 @@
 import * as SecureStore from "expo-secure-store";
 
-type Keys = "session_token";
+type Keys = "session_token" | "onboarding";
 
 interface Values {
   session_token: string;
+  onboarding: {
+    introduction?: boolean;
+    habitLoop?: boolean;
+    neuroplasticity?: boolean;
+    gettingStarted?: boolean;
+  };
 }
 
 export const secureStore = {
-  async getItem<T extends Keys>(key: T) {
+  async getItem<T extends Keys>(key: T): Promise<Values[T] | null> {
     const value = await SecureStore.getItemAsync(key);
 
     if (!value) return null;
@@ -16,7 +22,7 @@ export const secureStore = {
       return JSON.parse(value) as Values[T];
     }
 
-    return value;
+    return value as Values[T];
   },
   async setItem<T extends Keys>(key: T, value: Values[T]) {
     return SecureStore.setItemAsync(
