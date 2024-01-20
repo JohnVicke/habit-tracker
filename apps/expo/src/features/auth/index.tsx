@@ -8,9 +8,9 @@ import { Typography } from "~/components/typography";
 export function Auth() {
   return (
     <Screen>
-      <View className="flex-1 justify-between">
+      <View className="h-full justify-between">
         <Typography size="xxl" bold>
-          track your {"\n"}habits
+          Vana!
         </Typography>
         <View className="gap-y-4">
           <Link href="/(auth)/sign-in" asChild>

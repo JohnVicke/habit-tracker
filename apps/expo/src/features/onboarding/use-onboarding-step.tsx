@@ -3,15 +3,15 @@ import { router } from "expo-router";
 
 import { secureStore } from "~/utils/secure-store";
 
-type Screens = NonNullable<
+export type OnboardingScreens = NonNullable<
   Awaited<ReturnType<typeof secureStore.getItem<"onboarding">>>
 >;
 
 export function useOnboardingStep() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [screens, setScreens] = React.useState<Screens>({});
+  const [screens, setScreens] = React.useState<OnboardingScreens>({});
 
-  async function completeStep(step: keyof Screens) {
+  async function completeStep(step: keyof OnboardingScreens) {
     setScreens((old) => ({ ...old, [step]: true }));
     await secureStore.setItem("onboarding", screens);
 
@@ -43,7 +43,7 @@ export function useOnboardingStep() {
             neuroplasticity: false,
             introduction: false,
             gettingStarted: false,
-          } satisfies Screens),
+          } satisfies OnboardingScreens),
       );
       setIsLoading(false);
     };

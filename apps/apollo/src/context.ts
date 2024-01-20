@@ -36,7 +36,7 @@ export async function createContext(
   const authContext = auth.handleRequest(args.req, args.res);
   const session = await authContext.validateBearerToken();
 
-  if (!session) {
+  if (session) {
     throw new HTError({ code: "UNAUTHENTICATED" });
   }
 

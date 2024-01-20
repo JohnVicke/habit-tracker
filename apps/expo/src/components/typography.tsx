@@ -65,10 +65,10 @@ const fontFamily = {
 } satisfies Record<FontFamily, string>;
 
 const fontSize = {
-  xs: "text-xs",
-  sm: "text-sm",
-  md: "text-md",
+  xs: "text-sm",
+  sm: "text-md",
+  md: "text-lg",
   lg: "text-xl",
   xl: "text-2xl",
-  xxl: "text-6xl",
+  xxl: "text-5xl",
 } satisfies Record<Size, string>;

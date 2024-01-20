@@ -1,10 +1,19 @@
-import { Screen } from "~/components/screen";
-import { Typography } from "~/components/typography";
+import { router } from "expo-router";
+
+import { OnboardingScreen } from "./onboarding-screen";
 
 export function Neuroplasticity() {
   return (
-    <Screen>
-      <Typography>Getting Started</Typography>
-    </Screen>
+    <OnboardingScreen
+      nextScreen={() => router.push("/getting-started")}
+      previousScreen={() => router.push("/habit-loop")}
+    >
+      <OnboardingScreen.Title>Neuroplasticity</OnboardingScreen.Title>
+      <OnboardingScreen.Description>
+        Your brain is incredibly adaptable. Through neuroplasticity, repeated
+        behaviors strengthen neural connections. Embrace the power of
+        consistency – every repetition counts.
+      </OnboardingScreen.Description>
+    </OnboardingScreen>
   );
 }

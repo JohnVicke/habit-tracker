@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 
+import { Button } from "./button";
 import { Typography } from "./typography";
 
 interface HeaderProps {
