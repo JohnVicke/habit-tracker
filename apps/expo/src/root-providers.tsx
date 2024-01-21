@@ -1,5 +1,4 @@
 import { ActivityIndicator } from "react-native";
-import { ApolloProvider } from "@apollo/client";
 import {
   Quicksand_300Light,
   Quicksand_400Regular,
@@ -11,9 +10,6 @@ import {
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import { AuthProvider } from "./features/auth/use-session";
-import { createApolloClient } from "./graphql/create-apollo-client";
-
-const client = createApolloClient();
 
 export function RootProviders(props: React.PropsWithChildren) {
   const [loaded, error] = useFonts({
@@ -30,9 +26,7 @@ export function RootProviders(props: React.PropsWithChildren) {
 
   return (
     <BottomSheetModalProvider>
-      <AuthProvider>
-        <ApolloProvider client={client}>{props.children}</ApolloProvider>
-      </AuthProvider>
+      <AuthProvider>{props.children}</AuthProvider>
     </BottomSheetModalProvider>
   );
 }
