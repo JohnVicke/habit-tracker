@@ -1,7 +1,7 @@
-import type { Control, FieldValue, FieldValues, Path } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
 import type { GestureResponderEvent } from "react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Controller } from "react-hook-form";
 
 import { Typography } from "~/components/typography";

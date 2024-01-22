@@ -1,34 +1,35 @@
 import { Text } from "react-native";
 import { Redirect } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 
-import { useSession } from "~/features/auth/use-session";
-import { useOnboardingStep } from "~/features/onboarding/use-onboarding-step";
+import { useOnboardingQuery } from "~/features/onboarding/use-onboarding";
 
 export default function LandingPage() {
-  const { session, isLoading } = useSession();
-  const { screens, isLoading: onboardingLoading } = useOnboardingStep();
+  const { data, isLoading: onboardingLoading } = useOnboardingQuery();
 
-  if (onboardingLoading || isLoading) {
+  const auth = useAuth();
+
+  if (onboardingLoading || !data || !auth.isLoaded) {
     return <Text>Loading...</Text>;
   }
 
-  if (session) {
+  if (auth.isSignedIn) {
     return <Redirect href="/(main)/(tabs)/dashboard" />;
   }
 
-  if (!screens.introduction) {
+  if (!data?.introduction) {
     return <Redirect href="/(onboarding)/introduction" />;
   }
 
-  if (!screens.habitLoop) {
+  if (!data.habitLoop) {
     return <Redirect href="/(onboarding)/habit-loop" />;
   }
 
-  if (!screens.neuroplasticity) {
+  if (!data.neuroplasticity) {
     return <Redirect href="/(onboarding)/neuroplasticity" />;
   }
 
-  if (!screens.gettingStarted) {
+  if (!data.gettingStarted) {
     return <Redirect href="/(onboarding)/getting-started" />;
   }
 

@@ -32,11 +32,6 @@
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
-    "@ht/apollo#dev": {
-      "dependsOn": ["^build"],
-      "persistent": true,
-      "cache": false
-    },
     "clean": {
       "cache": false
     },

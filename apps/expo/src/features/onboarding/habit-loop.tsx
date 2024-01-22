@@ -5,6 +5,7 @@ import { OnboardingScreen } from "./onboarding-screen";
 export function HabitLoop() {
   return (
     <OnboardingScreen
+      screen="habitLoop"
       nextScreen={() => router.push("/neuroplasticity")}
       previousScreen={() => router.push("/introduction")}
     >

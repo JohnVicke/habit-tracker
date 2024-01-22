@@ -11,7 +11,7 @@ interface ButtonProps {
 export function Button(props: React.PropsWithChildren<ButtonProps>) {
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View className="items-center justify-center rounded border-2 border-slate-300 bg-slate-300 px-4 py-3">
+      <View className="items-center justify-center rounded-full bg-emerald-300 px-4 py-4">
         {props.startIcon && (
           <View className="mr-2">
             <props.startIcon />

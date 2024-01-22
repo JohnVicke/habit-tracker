@@ -1,15 +1,17 @@
-import type { LucideIcon } from "lucide-react-native";
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
-import { ArrowLeft, ArrowRight } from "lucide-react-native";
+import { ArrowRight } from "lucide-react-native";
 import { MotiView, View } from "moti";
 import { MotiPressable, useMotiPressable } from "moti/interactions";
 
+import type { OnboardingScreenName } from "./use-onboarding";
 import { Screen } from "~/components/screen";
 import { Typography } from "~/components/typography";
+import { useOnboardingMutation } from "./use-onboarding";
 
 export interface OnboardingScreenProps {
+  screen: OnboardingScreenName;
   nextScreen: VoidFunction;
   previousScreen?: VoidFunction;
 }
@@ -62,8 +64,12 @@ function SkipAllButton() {
 }
 
 function ContinueButton(
-  props: React.PropsWithChildren<{ onPress: VoidFunction }>,
+  props: React.PropsWithChildren<{
+    onPress: VoidFunction;
+    screen: OnboardingScreenName;
+  }>,
 ) {
+  const { mutate } = useOnboardingMutation();
   return (
     <MotiView
       from={{ opacity: 0, translateY: 20 }}
@@ -74,6 +80,7 @@ function ContinueButton(
       <MotiPressable
         onPress={() => {
           props.onPress();
+          void mutate(props.screen);
           void Haptics.notificationAsync(
             Haptics.NotificationFeedbackType.Success,
           );
@@ -105,7 +112,7 @@ function ContinueButtonInner() {
 
   return (
     <MotiView>
-      <View className="flex-row items-center rounded px-4 py-2">
+      <View className="flex-row items-end rounded px-4 py-2">
         <MotiView state={textState}>
           <Typography size="xl">continue</Typography>
         </MotiView>
@@ -122,11 +129,11 @@ export function OnboardingScreen(
 ) {
   return (
     <Screen>
-      <View className="top-1/3 flex-1">
+      <View className="top-1/4 flex-1">
         <View className="w-full justify-start gap-y-4">
           {props.children}
-          <View className="justify-self-start">
-            <ContinueButton onPress={props.nextScreen} />
+          <View className="self-start">
+            <ContinueButton screen={props.screen} onPress={props.nextScreen} />
           </View>
         </View>
       </View>

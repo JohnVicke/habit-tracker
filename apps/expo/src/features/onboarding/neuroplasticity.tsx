@@ -5,6 +5,7 @@ import { OnboardingScreen } from "./onboarding-screen";
 export function Neuroplasticity() {
   return (
     <OnboardingScreen
+      screen="neuroplasticity"
       nextScreen={() => router.push("/getting-started")}
       previousScreen={() => router.push("/habit-loop")}
     >

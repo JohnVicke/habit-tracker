@@ -1,5 +1,7 @@
 import { ActivityIndicator } from "react-native";
-import { ApolloProvider } from "@apollo/client";
+import Constants from "expo-constants";
+import * as SecureStore from "expo-secure-store";
+import { ClerkProvider } from "@clerk/clerk-expo";
 import {
   Quicksand_300Light,
   Quicksand_400Regular,
@@ -10,10 +12,24 @@ import {
 } from "@expo-google-fonts/quicksand";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-import { AuthProvider } from "./features/auth/use-session";
-import { createApolloClient } from "./graphql/create-apollo-client";
+import { TRPCProvider } from "./utils/api";
 
-const client = createApolloClient();
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
 export function RootProviders(props: React.PropsWithChildren) {
   const [loaded, error] = useFonts({
@@ -29,10 +45,13 @@ export function RootProviders(props: React.PropsWithChildren) {
   }
 
   return (
-    <BottomSheetModalProvider>
-      <AuthProvider>
-        <ApolloProvider client={client}>{props.children}</ApolloProvider>
-      </AuthProvider>
-    </BottomSheetModalProvider>
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={Constants.expoConfig.extra.clerkPublishableKey}
+    >
+      <TRPCProvider>
+        <BottomSheetModalProvider>{props.children}</BottomSheetModalProvider>
+      </TRPCProvider>
+    </ClerkProvider>
   );
 }

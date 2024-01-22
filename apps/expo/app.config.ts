@@ -1,17 +1,17 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "expo",
-  slug: "expo",
+  name: "vana",
+  slug: "habit-tracker",
   scheme: "expo",
   version: "0.1.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
+  icon: "./assets/vana.png",
   userInterfaceStyle: "automatic",
   splash: {
-    image: "./assets/icon.png",
+    foregroundImage: "./assets/vana.png",
+    backgroundColor: "#ECFDF5",
     resizeMode: "contain",
-    backgroundColor: "#1F104A",
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -24,8 +24,8 @@ const defineConfig = (): ExpoConfig => ({
   android: {
     package: "com.johnvicke.ht",
     adaptiveIcon: {
-      foregroundImage: "./assets/icon.png",
-      backgroundColor: "#1F104A",
+      foregroundImage: "./assets/vana.png",
+      backgroundColor: "#ECFDF5",
     },
   },
   experiments: {
@@ -33,6 +33,12 @@ const defineConfig = (): ExpoConfig => ({
     typedRoutes: true,
   },
   plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
+  extra: {
+    clerkPublishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+    eas: {
+      projectId: "cee0bb0f-5eff-48a6-b192-50f028298705",
+    },
+  },
 });
 
 export default defineConfig;
