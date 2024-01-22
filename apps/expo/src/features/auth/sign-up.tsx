@@ -13,7 +13,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export const SignUp = () => {
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit: _handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       username: "testuser",

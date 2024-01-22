@@ -3,7 +3,7 @@ import { format, previousMonday } from "date-fns";
 
 export function WeeklyProgress() {
   const today = new Date();
-  const startOfWeek = previousMonday(today);
+  const _startOfWeek = previousMonday(today);
   return (
     <View>
       <Text>weekly</Text>
@@ -16,7 +16,7 @@ interface DayProgressProps {
   completions?: number;
 }
 
-function DayProgress(props: DayProgressProps) {
+export function DayProgress(props: DayProgressProps) {
   const weekDay = format(props.day, "iiiii");
   return (
     <View>

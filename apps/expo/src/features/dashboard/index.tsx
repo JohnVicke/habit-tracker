@@ -6,7 +6,6 @@ import Animated, {
 
 import { Header } from "~/components/header";
 import { Screen } from "~/components/screen";
-import { Habit } from "./habit";
 
 export function Dashboard() {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -16,7 +15,7 @@ export function Dashboard() {
     <Screen>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         <Header scrollOffset={scrollOffset} />
-        <View className="gap-y-4"></View>
+        <View className="gap-y-4" />
       </Animated.ScrollView>
     </Screen>
   );

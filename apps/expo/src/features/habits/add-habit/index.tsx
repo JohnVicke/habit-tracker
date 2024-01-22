@@ -1,6 +1,6 @@
 import React from "react";
-import { KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
-import { Link, router } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Minus, Plus } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
@@ -42,9 +42,7 @@ const schema = z.object({
 export type AddHabitFormValues = z.infer<typeof schema>;
 
 export function AddHabit() {
-  const isPresented = router.canGoBack();
-
-  const { handleSubmit, control } = useForm<AddHabitFormValues>({
+  const { handleSubmit: _handleSubmit, control } = useForm<AddHabitFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       occurances: 1,

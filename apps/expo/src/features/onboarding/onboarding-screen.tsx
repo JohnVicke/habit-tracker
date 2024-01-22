@@ -1,8 +1,7 @@
-import type { LucideIcon } from "lucide-react-native";
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
-import { ArrowLeft, ArrowRight } from "lucide-react-native";
+import { ArrowRight } from "lucide-react-native";
 import { MotiView, View } from "moti";
 import { MotiPressable, useMotiPressable } from "moti/interactions";
 
