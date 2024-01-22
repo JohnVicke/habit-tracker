@@ -8,7 +8,7 @@ import { MotiPressable, useMotiPressable } from "moti/interactions";
 import type { OnboardingScreenName } from "./use-onboarding";
 import { Screen } from "~/components/screen";
 import { Typography } from "~/components/typography";
-import { useOnboardingMutation, useOnboardingQuery } from "./use-onboarding";
+import { useOnboardingMutation } from "./use-onboarding";
 
 export interface OnboardingScreenProps {
   screen: OnboardingScreenName;
