@@ -47,7 +47,7 @@ export function RootProviders(props: React.PropsWithChildren) {
   return (
     <ClerkProvider
       tokenCache={tokenCache}
-      publishableKey={Constants.expoConfig.extra.clerkPublishableKey as string}
+      publishableKey={Constants.expoConfig.extra.clerkPublishableKey}
     >
       <TRPCProvider>
         <BottomSheetModalProvider>{props.children}</BottomSheetModalProvider>

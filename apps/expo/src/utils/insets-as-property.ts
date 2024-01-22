@@ -11,6 +11,7 @@ export function insetsAsProperty(
   property: Property = "padding",
 ) {
   return objectEntries(edges).reduce((acc, [key, value]) => {
+    // @ts-expect-error this is fine
     acc[`${property}${capitalize(key)}`] = value;
     return acc;
   }, {} as StyleProp<ViewStyle>);
