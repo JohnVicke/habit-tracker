@@ -1,11 +1,22 @@
 import { View } from "react-native";
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 
 import { Button } from "~/components/button";
 import { Screen } from "~/components/screen";
 import { Typography } from "~/components/typography";
 
 export function Auth() {
+  const auth = useAuth();
+
+  if (!auth.isLoaded) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (auth.isSignedIn) {
+    return <Redirect href="/(main)/(tabs)/dashboard" />;
+  }
+
   return (
     <Screen>
       <View className="h-full justify-between">

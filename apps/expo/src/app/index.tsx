@@ -1,19 +1,13 @@
 import { Text } from "react-native";
 import { Redirect } from "expo-router";
 
-import { useSession } from "~/features/auth/use-session";
 import { useOnboardingStep } from "~/features/onboarding/use-onboarding-step";
 
 export default function LandingPage() {
-  const { session, isLoading } = useSession();
   const { screens, isLoading: onboardingLoading } = useOnboardingStep();
 
-  if (onboardingLoading || isLoading) {
+  if (onboardingLoading) {
     return <Text>Loading...</Text>;
-  }
-
-  if (session) {
-    return <Redirect href="/(main)/(tabs)/dashboard" />;
   }
 
   if (!screens.introduction) {

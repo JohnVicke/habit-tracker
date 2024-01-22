@@ -33,6 +33,9 @@ const defineConfig = (): ExpoConfig => ({
     typedRoutes: true,
   },
   plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
+  extra: {
+    clerkPublishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+  },
 });
 
 export default defineConfig;

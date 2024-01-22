@@ -1,18 +1,11 @@
 {
   "name": "@ht/db",
+  "main": "./src/index.ts",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
   "license": "MIT",
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
@@ -26,9 +19,9 @@
     "drizzle-orm": "^0.29.3"
   },
   "devDependencies": {
-    "@ht/eslint-config": "workspace:^0.2.0",
-    "@ht/prettier-config": "workspace:^0.1.0",
-    "@ht/tsconfig": "workspace:^0.1.0",
+    "@ht/eslint-config": "workspace:*",
+    "@ht/prettier-config": "workspace:*",
+    "@ht/tsconfig": "workspace:*",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.9",
     "eslint": "^8.56.0",

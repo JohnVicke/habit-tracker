@@ -1,10 +1,9 @@
 import { Text, View } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Screen } from "~/components/screen";
-import { useSignUpMutation } from "~/graphql/mutations/sign-up";
 
 const schema = z.object({
   username: z.string().min(3),
@@ -21,8 +20,6 @@ export const SignUp = () => {
       password: "Tallasen1",
     },
   });
-
-  const { mutate, loading } = useSignUpMutation();
 
   return (
     <Screen>

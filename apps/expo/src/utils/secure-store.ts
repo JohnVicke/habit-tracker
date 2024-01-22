@@ -1,9 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 
-type Keys = "session_token" | "onboarding";
+type Keys = "onboarding";
 
 interface Values {
-  session_token: string;
   onboarding: {
     introduction?: boolean;
     habitLoop?: boolean;

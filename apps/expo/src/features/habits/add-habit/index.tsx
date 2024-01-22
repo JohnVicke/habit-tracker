@@ -10,7 +10,6 @@ import { Button } from "~/components/button";
 import { Screen } from "~/components/screen";
 import { TextField } from "~/components/text-field";
 import { Typography } from "~/components/typography";
-import { useCreateHabitMutation } from "~/graphql/mutations/create-habit";
 import { ColorSelectField } from "./color-select-field";
 import { EmojiSelectField } from "./emoji-select-field";
 import { NotificiationSelectField } from "./notification-select-field";
@@ -44,8 +43,6 @@ export type AddHabitFormValues = z.infer<typeof schema>;
 
 export function AddHabit() {
   const isPresented = router.canGoBack();
-
-  const { mutate, loading } = useCreateHabitMutation();
 
   const { handleSubmit, control } = useForm<AddHabitFormValues>({
     resolver: zodResolver(schema),

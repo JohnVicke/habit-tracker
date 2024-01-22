@@ -14,3 +14,8 @@ const app = new Elysia()
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
+console.log(
+  `🦊 Serving tRPC on ${app.server?.hostname}:${app.server?.port}/v1/trpc`,
+);
+
+export type { Router } from "./trpc";
