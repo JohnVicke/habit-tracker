@@ -24,10 +24,10 @@ function TabBar(props: TabBarProps) {
   const { insets } = props;
   const padding = insetsAsProperty(insets);
   return (
-    <View style={padding} className="relative flex h-10 bg-slate-300">
+    <View style={padding} className="relative flex h-10 bg-emerald-100">
       <View className="flex w-full flex-row items-end justify-around">
         <Link href="/(main)/(tabs)/dashboard" asChild>
-          <CalendarCheck2 className="text-slate-900" />
+          <CalendarCheck2 className="text-emerald-900" />
         </Link>
         <Link href="/add-habit" asChild>
           <View className="mb-0 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-200 shadow shadow-emerald-300">
@@ -35,7 +35,7 @@ function TabBar(props: TabBarProps) {
           </View>
         </Link>
         <Link href="/(main)/(tabs)/statistics" asChild>
-          <BarChart3 className="text-slate-900" />
+          <BarChart3 className="text-emerald-900" />
         </Link>
       </View>
     </View>

@@ -1,12 +1,16 @@
+import type { ImageURISource } from "react-native";
 import { View } from "react-native";
-import { Link, Redirect } from "expo-router";
+import { useAssets } from "expo-asset";
+import { Redirect } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
+import { MotiImage, MotiView } from "moti";
 
-import { Button } from "~/components/button";
 import { Screen } from "~/components/screen";
 import { Typography } from "~/components/typography";
+import { SignIn } from "./sign-in";
 
 export function Auth() {
+  const [assets] = useAssets([require("../../../assets/vana.png")]);
   const auth = useAuth();
 
   if (!auth.isLoaded) {
@@ -19,19 +23,32 @@ export function Auth() {
 
   return (
     <Screen>
-      <View className="h-full justify-between">
-        <Typography size="xxl" bold>
-          Vana!
-        </Typography>
+      {assets?.[0] ? (
+        <MotiImage
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          style={{
+            marginTop: "20%",
+            resizeMode: "center",
+            height: 300,
+            width: 300,
+            alignSelf: "center",
+          }}
+          source={assets[0] as ImageURISource}
+        />
+      ) : (
+        <View style={{ width: 300, height: 300 }} />
+      )}
+      <MotiView
+        from={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: "timing", delay: 500 }}
+        className="justify-between"
+      >
         <View className="gap-y-4">
-          <Link href="/(auth)/sign-in" asChild>
-            <Button>Sign in</Button>
-          </Link>
-          <Link href="/(auth)/sign-up" asChild>
-            <Button>Sign up</Button>
-          </Link>
+          <SignIn />
         </View>
-      </View>
+      </MotiView>
     </Screen>
   );
 }
