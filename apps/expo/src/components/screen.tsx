@@ -12,7 +12,7 @@ export function Screen(props: React.PropsWithChildren) {
     right: 16,
   });
   return (
-    <View {...styles} className="flex-1 bg-slate-900">
+    <View {...styles} className="relative flex-1 bg-slate-950">
       {props.children}
     </View>
   );

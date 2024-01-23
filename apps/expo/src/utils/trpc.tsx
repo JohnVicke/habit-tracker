@@ -1,5 +1,6 @@
 import React from "react";
 import Constants from "expo-constants";
+import { useAuth } from "@clerk/clerk-expo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
@@ -7,7 +8,7 @@ import SuperJSON from "superjson";
 
 import type { Router } from "@ht/elysia";
 
-export const api = createTRPCReact<Router>();
+export const trpc = createTRPCReact<Router>();
 
 const getBaseUrl = () => {
   const debuggerHost = Constants.expoConfig?.hostUri;
@@ -22,16 +23,19 @@ const getBaseUrl = () => {
 };
 
 export function TRPCProvider(props: React.PropsWithChildren) {
-  const [qc] = React.useState(() => new QueryClient());
+  const { getToken } = useAuth();
+  const [queryClient] = React.useState(() => new QueryClient());
   const [trpcClient] = React.useState(() =>
-    api.createClient({
+    trpc.createClient({
       transformer: SuperJSON,
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/v1/trpc`,
-          headers() {
+          async headers() {
             const headers = new Map<string, string>();
+            const token = await getToken();
             headers.set("x-trpc-source", "expo-react");
+            token && headers.set("Authorization", token);
             return Object.fromEntries(headers);
           },
         }),
@@ -46,8 +50,10 @@ export function TRPCProvider(props: React.PropsWithChildren) {
   );
 
   return (
-    <api.Provider client={trpcClient} queryClient={qc}>
-      <QueryClientProvider client={qc}>{props.children}</QueryClientProvider>
-    </api.Provider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        {props.children}
+      </QueryClientProvider>
+    </trpc.Provider>
   );
 }

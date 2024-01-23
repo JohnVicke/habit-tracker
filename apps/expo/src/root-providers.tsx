@@ -12,7 +12,7 @@ import {
 } from "@expo-google-fonts/quicksand";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-import { TRPCProvider } from "./utils/api";
+import { TRPCProvider } from "./utils/trpc";
 
 const tokenCache = {
   async getToken(key: string) {

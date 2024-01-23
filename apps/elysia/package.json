@@ -12,8 +12,9 @@
     "@elysiajs/swagger": "^0.8.3",
     "@elysiajs/trpc": "^0.8.0",
     "@ht/db": "workspace:*",
-    "@trpc/server": "^10.45.0",
+    "@trpc/server": "next",
     "elysia": "latest",
+    "pino": "^8.17.2",
     "superjson": "^2.2.1",
     "zod": "^3.22.4"
   },
