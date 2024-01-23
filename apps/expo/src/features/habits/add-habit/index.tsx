@@ -52,14 +52,14 @@ export function AddHabit() {
 
   const goBack = () => {
     if (!router.canGoBack()) {
-      return router.push("/(main)/(tabs)/dashboard");
+      return router.push("/(main)/(swipe-navigation)/dashboard");
     }
     return router.back();
   };
 
   return (
     <Screen>
-      <Button onPress={goBack}>Go back</Button>
+      {!router.canGoBack && <Button onPress={goBack}>Go back</Button>}
       <View className="flex-1 justify-between">
         <View className="gap-y-4">
           <TextField

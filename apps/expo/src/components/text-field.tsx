@@ -3,6 +3,8 @@ import type { KeyboardType } from "react-native";
 import { Text, TextInput, View } from "react-native";
 import { Controller } from "react-hook-form";
 
+import { Typography } from "./typography";
+
 interface TextFieldProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
@@ -20,17 +22,13 @@ export function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
       name={props.name}
       render={({ field, fieldState }) => (
         <View>
-          {props.label && (
-            <Text className="mb-2 font-qs-regular text-slate-800">
-              {props.label}
-            </Text>
-          )}
+          {props.label && <Typography>{props.label}</Typography>}
           <TextInput
             keyboardType={keyboardType}
             onChange={(e) => field.onChange(e.nativeEvent.text)}
             onBlur={field.onBlur}
             placeholder={props.placeholder}
-            className="rounded bg-slate-100 px-2 py-3 font-qs-regular"
+            className="rounded bg-slate-800 px-2 py-3 font-qs-regular text-slate-200"
           />
           {fieldState.error && (
             <Text className="font-qs-regular text-red-400">

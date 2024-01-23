@@ -68,11 +68,11 @@ function Icon(props: IconProps) {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View
-        className={`flex h-12 w-12 items-center justify-center rounded-[0.5rem] bg-slate-100 text-slate-700 ${
+        className={`flex h-12 w-12 items-center justify-center rounded-[0.5rem] bg-slate-800 text-slate-200 ${
           props.active && "border-2 border-slate-600 shadow shadow-slate-900"
         }`}
       >
-        {RenderIcon && <RenderIcon className="text-slate-800" />}
+        {RenderIcon && <RenderIcon className="text-slate-200" />}
         {props.emoji && <Typography size="xl">{props.emoji}</Typography>}
       </View>
     </TouchableOpacity>

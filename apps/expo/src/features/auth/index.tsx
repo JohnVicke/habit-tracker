@@ -18,7 +18,7 @@ export function Auth() {
   }
 
   if (auth.isSignedIn) {
-    return <Redirect href="/(main)/(tabs)/dashboard" />;
+    return <Redirect href="/(main)/dashboard" />;
   }
 
   return (

@@ -35,7 +35,7 @@ export function StreakSelectField(props: NotificiationSelectFieldProps) {
     <>
       <TouchableOpacity className="flex-1" onPress={openSheet}>
         {props.label && <Typography tw="mb-2">{props.label}</Typography>}
-        <Typography tw="rounded bg-slate-100 px-2 py-3.5">
+        <Typography tw="rounded bg-slate-800 px-2 py-3.5">
           {props.value ?? props.placeholder}
         </Typography>
       </TouchableOpacity>

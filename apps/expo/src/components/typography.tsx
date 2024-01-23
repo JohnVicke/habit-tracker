@@ -49,7 +49,7 @@ export function Typography({
 
   return (
     <Text
-      className={cn(`${family} ${fontSize[size]} ${tw} text-slate-800 `)}
+      className={cn(`${family} ${fontSize[size]} ${tw} text-slate-200 `)}
       {...rest}
     />
   );

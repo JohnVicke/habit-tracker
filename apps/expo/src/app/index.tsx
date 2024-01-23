@@ -14,7 +14,7 @@ export default function LandingPage() {
   }
 
   if (auth.isSignedIn) {
-    return <Redirect href="/(main)/(tabs)/dashboard" />;
+    return <Redirect href="/(main)/(swipe-navigation)/dashboard" />;
   }
 
   if (!data?.introduction) {
