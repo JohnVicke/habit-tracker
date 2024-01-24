@@ -1,4 +1,4 @@
-import { schema, createId } from "@ht/db";
+import { schema, createId, eq } from "@ht/db";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from "zod";
 
@@ -22,4 +22,19 @@ export const habitRouter = createTRPCRouter({
       where: (habits, { eq }) => eq(habits.userId, auth.userId),
     });
   }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ input, ctx: { db } }) => {
+      return db.delete(schema.habit).where(eq(schema.habit.id, input.id));
+    }),
+  byId: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input, ctx: { db } }) => {
+      return db.query.habit.findFirst({
+        where: (habit, { eq }) => eq(habit.id, input.id),
+        with: {
+          entries: true,
+        },
+      });
+    }),
 });

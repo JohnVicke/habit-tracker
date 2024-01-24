@@ -32,7 +32,7 @@ export function AddHabit() {
 
   const goBack = () => {
     if (!router.canGoBack()) {
-      return router.push("/(main)/(swipe-navigation)/dashboard");
+      return router.push("/(main)/(dashboard)/dashboard");
     }
     return router.back();
   };

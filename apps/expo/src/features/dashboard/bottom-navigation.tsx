@@ -5,11 +5,9 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withSpring,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
-import { router } from "expo-router";
 import { MotiView } from "moti";
 
 import { Typography } from "~/components/typography";
@@ -17,18 +15,15 @@ import { cn } from "~/utils/cn";
 
 const WIDTH = Dimensions.get("window").width;
 
-interface Route {
-  href: string;
-  text: string;
+interface Screen {
+  name: string;
 }
 
 interface BottomNavigationProps {
-  routes: Route[];
-  activeRoute: {
-    route: Route;
-    next: Route;
-    previous: Route;
-  };
+  screens: readonly Screen[];
+  activeScreen: Screen;
+  nextScreen: VoidFunction;
+  prevScreen: VoidFunction;
 }
 
 export function BottomNavigation(props: BottomNavigationProps) {
@@ -38,7 +33,7 @@ export function BottomNavigation(props: BottomNavigationProps) {
   React.useEffect(() => {
     position.value = withSpring(0);
     opacity.value = withSpring(1);
-  }, [props.activeRoute, opacity, position]);
+  }, [props.activeScreen, opacity, position]);
 
   const pan = Gesture.Pan()
     .onUpdate((e) => {
@@ -60,11 +55,11 @@ export function BottomNavigation(props: BottomNavigationProps) {
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       if (e.translationX > 0) {
-        position.value = withSpring(-WIDTH, { duration: 50 });
-        router.push(props.activeRoute.previous.href);
+        position.value = -WIDTH / 2;
+        props.nextScreen();
       } else {
-        position.value = withSpring(WIDTH, { duration: 50 });
-        router.push(props.activeRoute.next.href);
+        position.value = WIDTH / 2;
+        props.prevScreen();
       }
     })
     .runOnJS(true);
@@ -75,18 +70,18 @@ export function BottomNavigation(props: BottomNavigationProps) {
         <View className="self-center">
           <TestContent position={position} opacity={opacity}>
             <Typography size="lg" bold>
-              {props.activeRoute.route.text}
+              {props.activeScreen.name}
             </Typography>
           </TestContent>
         </View>
         <View className="flex-row gap-x-2">
-          {props.routes.map((route, index) => (
+          {props.screens.map((route) => (
             <MotiView
               animate={{
-                opacity: props.activeRoute.route.href === route.href ? 1 : 0.2,
+                opacity: props.activeScreen.name === route.name ? 1 : 0.2,
               }}
               transition={{ type: "timing" }}
-              key={index}
+              key={route.name}
               className={cn("h-2 w-2 rounded-full bg-slate-600")}
             />
           ))}

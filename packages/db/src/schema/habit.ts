@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 import { id, timestamps } from "../utils/sql";
@@ -19,3 +20,14 @@ export const habitEntry = sqliteTable("habit_entry", {
   day: integer("day", { mode: "timestamp_ms" }).notNull(),
   ...timestamps,
 });
+
+export const habitRelations = relations(habit, ({ many }) => ({
+  entries: many(habitEntry),
+}));
+
+export const habitEntryRelations = relations(habitEntry, ({ one }) => ({
+  habit: one(habit, {
+    fields: [habitEntry.habitId],
+    references: [habit.id],
+  }),
+}));
