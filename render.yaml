@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: vana-backend
+    env: docker
+    repo: https://github.com/johnvicke/habit-tracker
+    plan: starter
+    autoDeploy: false

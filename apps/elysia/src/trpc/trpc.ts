@@ -1,16 +1,18 @@
+import type { SignedInAuthObject, SignedOutAuthObject } from "@clerk/backend";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { initTRPC } from "@trpc/server";
-import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import SuperJSON from "superjson";
-import { SignedInAuthObject, SignedOutAuthObject } from "@clerk/backend";
+
 import { db } from "@ht/db";
+
 import { clerkClient } from "../clerk";
+import { logger } from "../logger";
 import { createAuthMiddleware } from "./middlewares/auth";
 import { createLoggingMiddleware } from "./middlewares/logging";
-import { logger } from "../logger";
 
-type AuthContextProps = {
+interface AuthContextProps {
   auth: SignedInAuthObject | SignedOutAuthObject | null;
-};
+}
 
 const getAuth = async (opts: FetchCreateContextFnOptions) => {
   const start = Date.now();
@@ -25,7 +27,7 @@ const getAuth = async (opts: FetchCreateContextFnOptions) => {
   return requestState.toAuth();
 };
 
-export const createContextInner = async ({ auth }: AuthContextProps) => {
+export const createContextInner = ({ auth }: AuthContextProps) => {
   return { auth, db };
 };
 

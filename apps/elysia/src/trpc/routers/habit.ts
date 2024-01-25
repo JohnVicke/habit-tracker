@@ -1,6 +1,8 @@
-import { schema, createId, eq } from "@ht/db";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from "zod";
+
+import { createId, eq, schema } from "@ht/db";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const habitRouter = createTRPCRouter({
   create: protectedProcedure

@@ -43,7 +43,7 @@ export function Habit(props: HabitProps) {
   }, [activeIndex, setActiveIndex]);
 
   const CurrentScreen = React.useMemo(() => {
-    const key = screens[activeIndex].name!;
+    const key = screens[activeIndex].name;
     return screenMap[key];
   }, [activeIndex]);
 

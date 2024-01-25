@@ -3,9 +3,9 @@ import swagger from "@elysiajs/swagger";
 import { trpc } from "@elysiajs/trpc";
 import { Elysia } from "elysia";
 
-import { createContext, router } from "./trpc";
 import { env } from "./env";
 import { logger } from "./logger";
+import { createContext, router } from "./trpc";
 
 const app = new Elysia()
   .use(cors())

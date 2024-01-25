@@ -1,30 +1,26 @@
-FROM debian:11.6-slim as builder
+FROM oven/bun as base
 
+FROM base as builder
 WORKDIR /app
 
-RUN apt update
-RUN apt install curl unzip -y
+RUN bun install --global turbo
 
-RUN curl https://bun.sh/install | bash
+COPY . .
+RUN turbo prune @ht/elysia --docker
 
-COPY package.json .
-COPY bun.lockb .
 
-RUN /root/.bun/bin/bun install --production
-
-# ? -------------------------
-FROM gcr.io/distroless/base
-
+FROM base as installer
 WORKDIR /app
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/bun.lockb ./bun.lockb
+RUN bun install --production
 
-COPY --from=builder /root/.bun/bin/bun bun
-COPY --from=builder /app/node_modules node_modules
-
-COPY src src
-COPY tsconfig.json .
-# COPY public public
+FROM base as runner
+WORKDIR /app
+COPY --from=installer /app/apps/elysia/package.json .
 
 ENV NODE_ENV production
-CMD ["./bun", "src/index.ts"]
+CMD ["bun", "src/index.ts"]
 
 EXPOSE 3000

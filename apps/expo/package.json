@@ -62,6 +62,7 @@
     "@ht/tsconfig": "workspace:*",
     "@types/babel__core": "^7.20.4",
     "@types/react": "^18.2.46",
+    "bun-types": "latest",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "tailwindcss": "^3.4.0",

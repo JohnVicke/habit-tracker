@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "bun --env-file=../../.env run --watch src/index.ts"
+    "dev": "bun --env-file=../../.env run --watch src/index.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/backend": "^0.37.3",
@@ -21,7 +23,18 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@ht/eslint-config": "workspace:*",
+    "@ht/prettier-config": "workspace:*",
+    "@ht/tsconfig": "workspace:*",
+    "bun-types": "latest",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1"
   },
-  "module": "src/index.js"
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@ht/eslint-config/base"
+    ]
+  },
+  "prettier": "@ht/prettier-config"
 }
