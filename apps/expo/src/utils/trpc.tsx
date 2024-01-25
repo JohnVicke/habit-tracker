@@ -30,7 +30,7 @@ export function TRPCProvider(props: React.PropsWithChildren) {
       transformer: SuperJSON,
       links: [
         httpBatchLink({
-          url: `${getBaseUrl()}/v1/trpc`,
+          url: `${getBaseUrl()}/api/v1/trpc`,
           async headers() {
             const headers = new Map<string, string>();
             const token = await getToken();

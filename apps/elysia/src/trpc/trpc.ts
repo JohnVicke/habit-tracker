@@ -1,9 +1,11 @@
-import { TRPCError, initTRPC } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import SuperJSON from "superjson";
 import { SignedInAuthObject, SignedOutAuthObject } from "@clerk/backend";
 import { db } from "@ht/db";
 import { clerkClient } from "../clerk";
+import { createAuthMiddleware } from "./middlewares/auth";
+import { createLoggingMiddleware } from "./middlewares/logging";
 import { logger } from "../logger";
 
 type AuthContextProps = {
@@ -31,36 +33,13 @@ export const createContext = async (opts: FetchCreateContextFnOptions) => {
   return createContextInner({ auth: await getAuth(opts) });
 };
 
-const t = initTRPC
+export const t = initTRPC
   .context<Awaited<ReturnType<typeof createContext>>>()
   .create({ transformer: SuperJSON });
 
-const authMiddleware = t.middleware(({ ctx, next }) => {
-  if (!ctx?.auth?.userId) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
-  }
-  return next({
-    ctx: {
-      auth: ctx.auth,
-    },
-  });
-});
-
-const loggingMiddleware = t.middleware(async ({ path, type, next }) => {
-  const start = Date.now();
-  const result = await next();
-  const duration = Date.now() - start;
-
-  result.ok
-    ? logger.info({ path, type, duration })
-    : logger.error({ path, type, duration });
-
-  return result;
-});
-
 export const createTRPCRouter = t.router;
 
-export const publicProcedure = t.procedure.use(loggingMiddleware);
+export const publicProcedure = t.procedure.use(createLoggingMiddleware());
 export const protectedProcedure = t.procedure
-  .use(loggingMiddleware)
-  .use(authMiddleware);
+  .use(createLoggingMiddleware())
+  .use(createAuthMiddleware());

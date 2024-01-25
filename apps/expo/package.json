@@ -24,6 +24,7 @@
     "@tanstack/react-query": "^5.17.19",
     "@trpc/client": "next",
     "@trpc/react-query": "next",
+    "ajv": "^8.12.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "date-fns": "^3.2.0",
     "expo": "^49.0.21",

@@ -4,18 +4,22 @@ import { trpc } from "@elysiajs/trpc";
 import { Elysia } from "elysia";
 
 import { createContext, router } from "./trpc";
+import { env } from "./env";
+import { logger } from "./logger";
 
 const app = new Elysia()
   .use(cors())
   .use(swagger())
-  .use(trpc(router, { createContext, endpoint: "/v1/trpc" }))
-  .listen(3000);
+  .group("/api/v1", (group) =>
+    group.use(trpc(router, { createContext, endpoint: "/trpc" })),
+  )
+  .listen(env.PORT);
 
-console.log(
+logger.info(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
-console.log(
-  `🦊 Serving tRPC on ${app.server?.hostname}:${app.server?.port}/v1/trpc`,
+logger.info(
+  `🦊 Serving tRPC on ${app.server?.hostname}:${app.server?.port}/api/v1/trpc`,
 );
 
-export type { Router } from "./trpc";
+export type { Router, RouterInputs, RouterOutputs } from "./trpc";
