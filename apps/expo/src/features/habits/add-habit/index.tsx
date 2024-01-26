@@ -17,8 +17,10 @@ const schema = z.object({
 export type AddHabitFormValues = z.infer<typeof schema>;
 
 export function AddHabit() {
+  const utils = trpc.useUtils();
   const mutation = trpc.habit.create.useMutation({
     onSuccess(data) {
+      void utils.habit.all.invalidate();
       goBack();
     },
     onError(error, variables, context) {

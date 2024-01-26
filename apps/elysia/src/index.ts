@@ -10,9 +10,7 @@ import { createContext, router } from "./trpc";
 const app = new Elysia()
   .use(cors())
   .use(swagger())
-  .group("/api/v1", (group) =>
-    group.use(trpc(router, { createContext, endpoint: "/trpc" })),
-  )
+  .use(trpc(router, { createContext, endpoint: "api/v1/trpc" }))
   .listen(env.PORT);
 
 logger.info(

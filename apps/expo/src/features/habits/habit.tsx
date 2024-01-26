@@ -1,6 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 
+import type { RouterOutputs } from "@ht/elysia";
+
 import { Screen } from "~/components/screen";
 import { Typography } from "~/components/typography";
 import { trpc } from "~/utils/trpc";
@@ -19,9 +21,16 @@ type Screens = (typeof screens)[number];
 const screenMap = {
   main: Main,
   yearly: YearlySummary,
-} satisfies Record<Screens["name"], () => JSX.Element>;
+} satisfies Record<
+  Screens["name"],
+  React.ComponentType<{ habit: RouterOutputs["habit"]["byId"] }>
+>;
 
 export function Habit(props: HabitProps) {
+  const { data, isLoading, isError } = trpc.habit.byId.useQuery({
+    id: props.id,
+  });
+
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const nextScreen = React.useCallback(() => {
@@ -47,10 +56,6 @@ export function Habit(props: HabitProps) {
     return screenMap[key];
   }, [activeIndex]);
 
-  const { data, isLoading, isError } = trpc.habit.byId.useQuery({
-    id: props.id,
-  });
-
   if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
@@ -63,7 +68,7 @@ export function Habit(props: HabitProps) {
     <Screen>
       <Typography bold>{data.name}</Typography>
       <View className="flex-1">
-        <CurrentScreen />
+        <CurrentScreen habit={data} />
       </View>
       <BottomNavigation
         nextScreen={nextScreen}
