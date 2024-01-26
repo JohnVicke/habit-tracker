@@ -7,6 +7,6 @@
     },
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
-  "include": ["src", "*.ts"],
+  "include": ["src", "test", "*.ts"],
   "exclude": ["node_modules", "build"],
 }

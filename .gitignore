@@ -48,3 +48,5 @@ yarn-error.log*
 
 # turbo
 .turbo
+*.sqlite*
+client_wal_index
