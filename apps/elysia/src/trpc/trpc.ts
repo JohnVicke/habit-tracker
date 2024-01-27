@@ -10,7 +10,7 @@ import { logger } from "../logger";
 import { createAuthMiddleware } from "./middlewares/auth";
 import { createLoggingMiddleware } from "./middlewares/logging";
 
-interface AuthContextProps {
+export interface Context {
   auth: SignedInAuthObject | SignedOutAuthObject | null;
 }
 
@@ -27,9 +27,10 @@ const getAuth = async (opts: FetchCreateContextFnOptions) => {
   return requestState.toAuth();
 };
 
-export const createContextInner = ({ auth }: AuthContextProps) => {
-  return { auth, db };
-};
+export const createContextInner = ({ auth }: Context) => ({
+  auth,
+  db,
+});
 
 export const createContext = async (opts: FetchCreateContextFnOptions) => {
   return createContextInner({ auth: await getAuth(opts) });

@@ -30,7 +30,6 @@ interface YearlySummaryProps {
 export function YearlySummary(props: YearlySummaryProps) {
   return (
     <View className="mb-2 flex-row justify-between gap-y-4">
-      <Typography>Yearly</Typography>
       <Foo today={year.today} months={year.months} />
     </View>
   );

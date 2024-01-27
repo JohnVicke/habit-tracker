@@ -1,6 +1,8 @@
 import { Clerk } from "@clerk/backend";
 
+import { env } from "./env";
+
 export const clerkClient = Clerk({
-  secretKey: process.env.CLERK_SECRET_KEY,
-  publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+  secretKey: env.CLERK_SECRET_KEY,
+  publishableKey: env.CLERK_PUBLISHABLE_KEY,
 });

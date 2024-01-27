@@ -17,12 +17,27 @@ const dbSchema = z.discriminatedUnion("DB_CONNECTION_TYPE", [
   }),
 ]);
 
+const envSpecific = z.discriminatedUnion("NODE_ENV", [
+  z.object({
+    NODE_ENV: z.literal("development"),
+    CLERK_SECRET_KEY: z.string().min(1),
+    CLERK_PUBLISHABLE_KEY: z.string().min(1),
+  }),
+  z.object({
+    NODE_ENV: z.literal("production"),
+    CLERK_SECRET_KEY: z.string().min(1),
+    CLERK_PUBLISHABLE_KEY: z.string().min(1),
+  }),
+  z.object({
+    NODE_ENV: z.literal("test"),
+  }),
+]);
+
 const envSchema = z
   .object({
     PORT: z.number().int().default(3000),
-    CLERK_SECRET_KEY: z.string().min(1),
-    CLERK_PUBLISHABLE_KEY: z.string().min(1),
   })
+  .and(envSpecific)
   .and(dbSchema);
 
 const parseResult = await envSchema.safeParseAsync(process.env);

@@ -15,6 +15,8 @@ import { cn } from "~/utils/cn";
 
 const WIDTH = Dimensions.get("window").width;
 
+const CHANGE_SCREEN_THRESHOLD = 100;
+
 interface Screen {
   name: string;
 }
@@ -27,6 +29,7 @@ interface BottomNavigationProps {
 }
 
 export function BottomNavigation(props: BottomNavigationProps) {
+  const [giveFeedback, setGiveFeedback] = React.useState(true);
   const position = useSharedValue(0);
   const opacity = useSharedValue(1);
 
@@ -44,9 +47,10 @@ export function BottomNavigation(props: BottomNavigationProps) {
     .onFinalize((e) => {
       const distance = Math.abs(e.translationX);
 
-      if (distance < 100) {
+      if (distance < CHANGE_SCREEN_THRESHOLD) {
         position.value = withSpring(0, { duration: 500 });
         opacity.value = withSpring(1, { duration: 500 });
+        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
 
