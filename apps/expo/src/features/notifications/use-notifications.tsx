@@ -10,31 +10,9 @@ import {
   getPermissionsAsync,
   removeNotificationSubscription,
   requestPermissionsAsync,
-  scheduleNotificationAsync,
   setNotificationChannelAsync,
-  setNotificationHandler,
 } from "expo-notifications";
 import colors from "tailwindcss/colors";
-
-setNotificationHandler({
-  // eslint-disable-next-line @typescript-eslint/require-await
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
-export async function schedulePushNotification() {
-  await scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
-      data: { data: "goes here" },
-    },
-    trigger: { seconds: 2 },
-  });
-}
 
 async function getToken() {
   const { status: existingStatus } = await getPermissionsAsync();

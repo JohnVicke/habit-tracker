@@ -5,9 +5,11 @@ import "../styles.css";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { useNotifications } from "~/features/notifications/use-notifications";
 import { RootProviders } from "~/root-providers";
 
 export default function RootLayout() {
+  useNotifications();
   return (
     <RootProviders>
       <SafeAreaProvider>
